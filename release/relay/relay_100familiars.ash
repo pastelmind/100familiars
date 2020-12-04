@@ -55,6 +55,24 @@ FamiliarRunInfo [familiar] get_familiar_run_infos() {
 }
 
 /**
+ * Check your terrarium to see what familiars you have.
+ * This function is needed because have_familiar() always returns false if you
+ * are in a challenge path that restricts familiars (e.g. Avatar of Boris).
+ */
+boolean [familiar] get_terrarium() {
+  boolean [familiar] terrarium_familiars;
+  string page = visit_url("familiar.php");
+  matcher familiar_id_matcher = create_matcher("fam\\((\\d+)\\)", page);
+  while (familiar_id_matcher.find()) {
+    familiar fam = to_familiar(to_int(familiar_id_matcher.group(1)));
+    if (fam != $familiar[ none ]) {
+      terrarium_familiars[fam] = true;
+    }
+  }
+  return terrarium_familiars;
+}
+
+/**
  * Generates a sortable HTML table of all familiars.
  */
 string generate_familiar_table() {
@@ -71,27 +89,37 @@ string generate_familiar_table() {
   html.appendln("  <tbody>");
 
   FamiliarRunInfo [familiar] familiar_run_infos =  get_familiar_run_infos();
+  boolean [familiar] terrarium_familiars = get_terrarium();
   foreach fam in $familiars[] {
     string best_run_text = "";
     string run_pct_class = "col-run-pct";
-    if (have_familiar(fam) && familiar_run_infos contains fam) {
-      float best_run_pct = familiar_run_infos[fam].best_run_pct;
-      best_run_text = to_string(best_run_pct, "%.1f");
-      if (best_run_pct == 100) {
-        // Perfect run
-        run_pct_class += " col-run-pct--perfect";
-      } else if (best_run_pct >= 90 && best_run_pct < 100) {
-        // Contributes to an Amateur/Professional Tour Guide trophy
-        run_pct_class += " col-run-pct--tourguide";
+    string col_owned_symbol;
+    string col_owned_classes = "col-owned";
+
+    if (have_familiar(fam) || terrarium_familiars[fam] || familiar_run_infos contains fam) {
+      if (familiar_run_infos contains fam) {
+        float best_run_pct = familiar_run_infos[fam].best_run_pct;
+        best_run_text = to_string(best_run_pct, "%.1f");
+        if (best_run_pct == 100) {
+          // Perfect run
+          run_pct_class += " col-run-pct--perfect";
+        } else if (best_run_pct >= 90 && best_run_pct < 100) {
+          // Contributes to an Amateur/Professional Tour Guide trophy
+          run_pct_class += " col-run-pct--tourguide";
+        }
       }
+
+      col_owned_symbol = "&#x2714;"; // Checkmark
+      col_owned_classes += " col-owned--yes";
+    } else {
+      col_owned_symbol = "&#x2718;"; // X mark
+      col_owned_classes += " col-owned--no";
     }
 
     html.appendln("    <tr>");
     html.appendln(`      <td class="col-img"><img src="/images/itemimages/{fam.image}"></td>`);
     html.appendln(`      <td>{fam}</td>`);
-    html.appendln(`      <td class="col-owned {have_familiar(fam) ? "col-owned--yes" : "col-owned--no"}">`);
-    html.appendln(`        {have_familiar(fam) ? "&#x2714;" : "&#x2718;"}`);
-    html.appendln("      </td>");
+    html.appendln(`      <td class="{col_owned_classes}">{col_owned_symbol}</td>`);
     html.appendln(`      <td class="{run_pct_class}">{best_run_text}</td>`);
     html.appendln("    </tr>");
   }
