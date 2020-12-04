@@ -16,6 +16,7 @@ svn checkout https://github.com/pastelmind/100familiars/trunk/release
 
 - Highlight familiars with 100% runs, or those with 90%-100% runs
 - Table sorting
+- Works even if your challenge path prevents access to familiars
 
 ## Screenshots
 
