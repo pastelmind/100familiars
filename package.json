@@ -3,14 +3,22 @@
   "version": "0.1.0-alpha",
   "description": "Relay script for KoLmafia that displays owned familiars and their 100% runs\"",
   "main": "release/relay/relay_100familiars.js",
-  "dependencies": {},
+  "engines": {
+    "node": ">=10"
+  },
+  "dependencies": {
+    "tablesort": "^5.2.1"
+  },
   "devDependencies": {
+    "@types/node": "^10.17.48",
     "kolmafia": "^1.0.3",
     "prettier": "^2.2.1",
     "typescript": "^4.1.2"
   },
   "scripts": {
-    "test": "tsc -p jsconfig.json && prettier --check ."
+    "postinstall": "npm run update-deps && prettier --write .",
+    "test": "tsc -p jsconfig.json && tsc -p node-scripts/jsconfig.json && prettier --check .",
+    "update-deps": "node node-scripts/update-deps.js"
   },
   "repository": {
     "type": "git",
