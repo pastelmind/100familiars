@@ -1,5 +1,7 @@
 # 100familiars
 
+[![Test & Lint status](https://github.com/pastelmind/100familiars/workflows/Test%20&%20Lint/badge.svg)](https://github.com/pastelmind/100familiars/actions)
+
 100familiars is a custom relay script for KoLmafia. It displays a table of familiars you currently own, as well as the highest familiar % record for each familiar from your ascensions.
 
 This script is a spiritual successor of matt.chugg's [Familiar Collector/Ascension Familiar Chooser](https://kolmafia.us/threads/familiar-collector-ascension-familiar-chooser.7433/).
