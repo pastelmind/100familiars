@@ -17,7 +17,7 @@
   },
   "scripts": {
     "postinstall": "npm run update-deps && prettier --write .",
-    "test": "tsc -p jsconfig.json && prettier --check .",
+    "test": "tsc -p jsconfig.json && tsc -p node-scripts/jsconfig.json && prettier --check .",
     "update-deps": "node node-scripts/update-deps.js"
   },
   "repository": {
