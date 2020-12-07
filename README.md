@@ -4,6 +4,8 @@
 
 This script is a spiritual successor of matt.chugg's [Familiar Collector/Ascension Familiar Chooser](https://kolmafia.us/threads/familiar-collector-ascension-familiar-chooser.7433/).
 
+_This script requires KoLmafia r20550 or later._
+
 ## Installing
 
 Enter the following into KoLmafia's gCLI:
