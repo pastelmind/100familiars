@@ -3,7 +3,9 @@
   "version": "0.1.0-alpha",
   "description": "Relay script for KoLmafia that displays owned familiars and their 100% runs\"",
   "main": "release/relay/relay_100familiars.js",
-  "dependencies": {},
+  "dependencies": {
+    "tablesort": "^5.2.1"
+  },
   "devDependencies": {
     "kolmafia": "^1.0.3",
     "prettier": "^2.2.1",
