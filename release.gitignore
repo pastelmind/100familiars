@@ -13,3 +13,4 @@
 
 # Exclude TypeScript files
 *.ts
+*.tsx
