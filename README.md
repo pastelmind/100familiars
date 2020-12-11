@@ -13,7 +13,7 @@ _This script requires KoLmafia r20550 or later._
 Enter the following into KoLmafia's gCLI:
 
 ```
-svn checkout https://github.com/pastelmind/100familiars/trunk/release
+svn checkout https://github.com/pastelmind/100familiars/branches/release
 ```
 
 ## Features
