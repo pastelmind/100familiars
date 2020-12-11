@@ -7,7 +7,8 @@
     "node": ">=10"
   },
   "dependencies": {
-    "tablesort": "^5.2.1"
+    "tablesort": "^5.2.1",
+    "vhtml": "^2.2.0"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.0.0",
