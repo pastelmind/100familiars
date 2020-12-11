@@ -18,6 +18,8 @@ import {
   xpath,
 } from "kolmafia";
 
+import h from "vhtml";
+
 /**
  * Represents an exception thrown when the current KoLmafia version does not
  * match an expected condition.
@@ -120,94 +122,103 @@ function getTerrarium(): Familiar[] {
  * @returns {string} HTML for the familiar table
  */
 function generateFamiliarTable() {
-  let html = `
-<table class="familiars">
-  <thead>
-    <tr>
-      <th class="no-sort" data-sort-method="none"></th>
-      <th>Familiar</th>
-      <th>Owned?</th>
-      <th>Best Run %</th>
-    </tr>
-  </thead>
-  <tbody>`;
-
   const familiarRuns = getFamiliarRuns();
   const terrariumFamiliars = new Set(getTerrarium());
 
-  for (let fam of Familiar.all()) {
-    let bestRunText = "";
-    let runPercentClasses = "col-run-pct";
-    let ownedSymbol;
-    let ownedClasses = "col-owned";
+  return (
+    <table class="familiars">
+      <thead>
+        <tr>
+          <th class="no-sort" data-sort-method="none"></th>
+          <th>Familiar</th>
+          <th>Owned?</th>
+          <th>Best Run %</th>
+        </tr>
+      </thead>
+      <tbody>
+        {Familiar.all().map((fam) => {
+          let bestRunText = "";
+          let runPercentClasses = "col-run-pct";
+          let ownedSymbol;
+          let ownedClasses = "col-owned";
 
-    if (
-      haveFamiliar(fam) ||
-      terrariumFamiliars.has(fam) ||
-      familiarRuns.has(fam)
-    ) {
-      let bestRunRecord = familiarRuns.get(fam);
-      if (bestRunRecord) {
-        let { bestRunPercent } = bestRunRecord;
-        bestRunText = formatString(bestRunPercent, "%.1f");
+          if (
+            haveFamiliar(fam) ||
+            terrariumFamiliars.has(fam) ||
+            familiarRuns.has(fam)
+          ) {
+            let bestRunRecord = familiarRuns.get(fam);
+            if (bestRunRecord) {
+              let { bestRunPercent } = bestRunRecord;
+              bestRunText = formatString(bestRunPercent, "%.1f");
 
-        if (bestRunPercent === 100) {
-          // Perfect run
-          runPercentClasses += " col-run-pct--perfect";
-        } else if (bestRunPercent >= 90 && bestRunPercent < 100) {
-          // Contributes to an Amateur/Professional Tour Guide trophy
-          runPercentClasses += " col-run-pct--tourguide";
-        }
-      }
+              if (bestRunPercent === 100) {
+                // Perfect run
+                runPercentClasses += " col-run-pct--perfect";
+              } else if (bestRunPercent >= 90 && bestRunPercent < 100) {
+                // Contributes to an Amateur/Professional Tour Guide trophy
+                runPercentClasses += " col-run-pct--tourguide";
+              }
+            }
 
-      ownedSymbol = "&#x2714;"; // Checkmark
-      ownedClasses += " col-owned--yes";
-    } else {
-      ownedSymbol = "&#x2718;"; // X mark
-      ownedClasses += " col-owned--no";
-    }
+            ownedSymbol = "&#x2714;"; // Checkmark
+            ownedClasses += " col-owned--yes";
+          } else {
+            ownedSymbol = "&#x2718;"; // X mark
+            ownedClasses += " col-owned--no";
+          }
 
-    html += `
-    <tr>
-      <td class="col-img"><img src="/images/itemimages/${fam.image}"></td>
-      <td>${String(fam)}</td>
-      <td class="${ownedClasses}">${ownedSymbol}</td>
-      <td class="${runPercentClasses}">${bestRunText}</td>
-    </tr>`;
-  }
-
-  html += `
-  </tbody>
-</table>
-`;
-  return html;
+          return (
+            <tr>
+              <td class="col-img">
+                <img src={"/images/itemimages/" + fam.image} />
+              </td>
+              <td>{String(fam)}</td>
+              <td
+                class={ownedClasses}
+                dangerouslySetInnerHTML={{ __html: ownedSymbol }}
+              ></td>
+              <td class={runPercentClasses}>{bestRunText}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
 }
 
 /**
  * Entrypoint of the relay script
  */
 export function main() {
-  write(`<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>100familiars</title>
-    <script src="/100familiars/tablesort.min.js"></script>
-    <script src="/100familiars/tablesort.number.min.js"></script>
-    <link rel="stylesheet" href="/100familiars/tablesort.css">
-    <link rel="stylesheet" href="/100familiars/style.css">
-  </head>
-  <body>`);
-
-  write(generateFamiliarTable());
-
-  write(`
-  <script>
-    new Tablesort(document.getElementsByClassName('familiars')[0]);
-  </script>
-  </body>
-</html>`);
+  write(
+    "<!DOCTYPE html>" +
+    (
+      <html lang="en">
+        <head>
+          <meta charSet="UTF-8" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <title>100familiars</title>
+          <script src="/100familiars/tablesort.min.js"></script>
+          <script src="/100familiars/tablesort.number.min.js"></script>
+          <link rel="stylesheet" href="/100familiars/tablesort.css" />
+          <link rel="stylesheet" href="/100familiars/style.css" />
+        </head>
+        <body>
+          {generateFamiliarTable()}
+          <script
+            dangerouslySetInnerHTML={{
+              __html:
+                "new Tablesort(document.getElementsByClassName('familiars')[0]);",
+            }}
+          ></script>
+        </body>
+      </html>
+    )
+  );
 }
 
 /**
