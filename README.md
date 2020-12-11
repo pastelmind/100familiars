@@ -24,4 +24,4 @@ svn checkout https://github.com/pastelmind/100familiars/trunk/release
 
 ## Screenshots
 
-![100familiars in action](images/100familiars-screenshot-1.png)
+![100familiars in action](screenshots/100familiars-screenshot-1.png)
