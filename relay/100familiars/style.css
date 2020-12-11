@@ -1,0 +1,56 @@
+.familiars {
+  background-color: #ffffff;
+  margin: 0 auto;
+}
+
+.familiars th,
+.familiars td:not(.col-img) {
+  padding: 0 0.5em;
+}
+
+.familiars th {
+  background-color: #cccccc;
+}
+
+.familiars tbody tr:nth-child(2n) {
+  background-color: #eeeeee;
+}
+
+.col-img {
+  /* Leave as little margin as possible on <img> */
+  line-height: 0;
+}
+
+.col-img > img {
+  height: 32px;
+  width: 32px;
+}
+
+.col-owned,
+.col-run-pct {
+  text-align: center;
+}
+
+.col-owned--yes {
+  color: #009900;
+}
+
+.col-owned--no {
+  color: #990000;
+}
+
+.col-run-pct--perfect {
+  background-color: #99ff99;
+}
+
+.familiars tbody tr:nth-child(2n) .col-run-pct--perfect {
+  background-color: #88ee88;
+}
+
+.col-run-pct--tourguide {
+  background-color: #ccff66;
+}
+
+.familiars tbody tr:nth-child(2n) .col-run-pct--tourguide {
+  background-color: #bbee55;
+}
