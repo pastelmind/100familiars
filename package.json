@@ -2,22 +2,28 @@
   "name": "100familiars",
   "version": "0.1.0-alpha",
   "description": "Relay script for KoLmafia that displays owned familiars and their 100% runs\"",
-  "main": "release/relay/relay_100familiars.js",
+  "main": "relay/relay_100familiars.js",
   "engines": {
     "node": ">=10"
   },
   "dependencies": {
-    "tablesort": "^5.2.1"
+    "tablesort": "^5.2.1",
+    "vhtml": "^2.2.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
     "@types/node": "^10.17.48",
     "commander": "^6.2.0",
     "kolmafia": "^1.0.3",
+    "preact": "^10.5.7",
     "prettier": "^2.2.1",
+    "rollup": "^2.34.2",
+    "tslib": "^2.0.3",
     "typescript": "^4.1.2"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "rollup -c",
     "release": "npm run build && node node-scripts/do-release.js",
     "test": "tsc --noEmit && tsc -p node-scripts/jsconfig.json && prettier --check ."
   },
