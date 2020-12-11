@@ -17,7 +17,7 @@
     "typescript": "^4.1.2"
   },
   "scripts": {
-    "test": "tsc -p jsconfig.json && tsc -p node-scripts/jsconfig.json && prettier --check ."
+    "test": "tsc --noEmit && tsc -p node-scripts/jsconfig.json && prettier --check ."
   },
   "repository": {
     "type": "git",
