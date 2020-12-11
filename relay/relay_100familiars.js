@@ -1,4 +1,117 @@
-"use strict";
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var kolmafia = require('kolmafia');
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
+}
+
+var vhtml = createCommonjsModule(function (module, exports) {
+(function (global, factory) {
+	 module.exports = factory() ;
+}(commonjsGlobal, (function () {
+var emptyTags = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
+
+var esc = function esc(str) {
+	return String(str).replace(/[&<>"']/g, function (s) {
+		return '&' + map[s] + ';';
+	});
+};
+var map = { '&': 'amp', '<': 'lt', '>': 'gt', '"': 'quot', "'": 'apos' };
+var setInnerHTMLAttr = 'dangerouslySetInnerHTML';
+var DOMAttributeNames = {
+	className: 'class',
+	htmlFor: 'for'
+};
+
+var sanitized = {};
+
+function h(name, attrs) {
+	var stack = [],
+	    s = '';
+	attrs = attrs || {};
+	for (var i = arguments.length; i-- > 2;) {
+		stack.push(arguments[i]);
+	}
+
+	if (typeof name === 'function') {
+		attrs.children = stack.reverse();
+		return name(attrs);
+	}
+
+	if (name) {
+		s += '<' + name;
+		if (attrs) for (var _i in attrs) {
+			if (attrs[_i] !== false && attrs[_i] != null && _i !== setInnerHTMLAttr) {
+				s += ' ' + (DOMAttributeNames[_i] ? DOMAttributeNames[_i] : esc(_i)) + '="' + esc(attrs[_i]) + '"';
+			}
+		}
+		s += '>';
+	}
+
+	if (emptyTags.indexOf(name) === -1) {
+		if (attrs[setInnerHTMLAttr]) {
+			s += attrs[setInnerHTMLAttr].__html;
+		} else while (stack.length) {
+			var child = stack.pop();
+			if (child) {
+				if (child.pop) {
+					for (var _i2 = child.length; _i2--;) {
+						stack.push(child[_i2]);
+					}
+				} else {
+					s += sanitized[child] === true ? child : esc(child);
+				}
+			}
+		}
+
+		s += name ? '</' + name + '>' : '';
+	}
+
+	sanitized[s] = true;
+	return s;
+}
+
+return h;
+
+})));
+
+});
+
 /**
  * @file Display your familiars and your best ascension run records with them.
  *
@@ -6,22 +119,6 @@
  * Familiar Chooser script. For his work, see:
  * https://kolmafia.us/threads/familiar-collector-ascension-familiar-chooser.7433/
  */
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.main = void 0;
-var kolmafia_1 = require("kolmafia");
 /**
  * Represents an exception thrown when the current KoLmafia version does not
  * match an expected condition.
@@ -41,8 +138,8 @@ sinceKolmafiaRevision(20550);
  */
 function getFamiliarRuns() {
     var runs = new Map();
-    var page = kolmafia_1.visitUrl("ascensionhistory.php?who=" + kolmafia_1.myId());
-    var nodes = kolmafia_1.xpath(page, '//table[@id="history"]//tr[position() > 1]//img');
+    var page = kolmafia.visitUrl("ascensionhistory.php?who=" + kolmafia.myId());
+    var nodes = kolmafia.xpath(page, '//table[@id="history"]//tr[position() > 1]//img');
     for (var _i = 0, nodes_1 = nodes; _i < nodes_1.length; _i++) {
         var node = nodes_1[_i];
         var match = /title="(.+?)\s*\((.+?)%/.exec(node);
@@ -52,11 +149,11 @@ function getFamiliarRuns() {
         // Use toFamiliar() because Familiar.get() crashes if it encounters an
         // unknown familiar name
         var familiarName = match[1];
-        var fam = kolmafia_1.toFamiliar(familiarName);
+        var fam = kolmafia.toFamiliar(familiarName);
         var runPercent = parseFloat(match[2]);
         // Skip unknown familiar
         if (fam === Familiar.get("none")) {
-            kolmafia_1.print("Unknown familiar name: " + familiarName, "red");
+            kolmafia.print("Unknown familiar name: " + familiarName, "red");
             continue;
         }
         // Skip if this is not the best run for this familiar
@@ -77,7 +174,7 @@ function getFamiliarRuns() {
  */
 function getTerrarium() {
     var terrariumFamiliars = [];
-    var page = kolmafia_1.visitUrl("familiar.php");
+    var page = kolmafia.visitUrl("familiar.php");
     var familiarIdPattern = /fam\((\d+)\)/g;
     var match;
     while ((match = familiarIdPattern.exec(page))) {
@@ -91,7 +188,7 @@ function getTerrarium() {
         var fam = Familiar.get(familiarId);
         // Skip unknown familiar
         if (fam === Familiar.get("none")) {
-            kolmafia_1.print("Unknown familiar ID: " + familiarId, "red");
+            kolmafia.print("Unknown familiar ID: " + familiarId, "red");
             continue;
         }
         terrariumFamiliars.push(fam);
@@ -103,52 +200,71 @@ function getTerrarium() {
  * @returns {string} HTML for the familiar table
  */
 function generateFamiliarTable() {
-    var html = "\n<table class=\"familiars\">\n  <thead>\n    <tr>\n      <th class=\"no-sort\" data-sort-method=\"none\"></th>\n      <th>Familiar</th>\n      <th>Owned?</th>\n      <th>Best Run %</th>\n    </tr>\n  </thead>\n  <tbody>";
     var familiarRuns = getFamiliarRuns();
     var terrariumFamiliars = new Set(getTerrarium());
-    for (var _i = 0, _a = Familiar.all(); _i < _a.length; _i++) {
-        var fam = _a[_i];
-        var bestRunText = "";
-        var runPercentClasses = "col-run-pct";
-        var ownedSymbol = void 0;
-        var ownedClasses = "col-owned";
-        if (kolmafia_1.haveFamiliar(fam) ||
-            terrariumFamiliars.has(fam) ||
-            familiarRuns.has(fam)) {
-            var bestRunRecord = familiarRuns.get(fam);
-            if (bestRunRecord) {
-                var bestRunPercent = bestRunRecord.bestRunPercent;
-                bestRunText = kolmafia_1.toString(bestRunPercent, "%.1f");
-                if (bestRunPercent === 100) {
-                    // Perfect run
-                    runPercentClasses += " col-run-pct--perfect";
+    return (vhtml("table", { class: "familiars" },
+        vhtml("thead", null,
+            vhtml("tr", null,
+                vhtml("th", { class: "no-sort", "data-sort-method": "none" }),
+                vhtml("th", null, "Familiar"),
+                vhtml("th", null, "Owned?"),
+                vhtml("th", null, "Best Run %"))),
+        vhtml("tbody", null, Familiar.all().map(function (fam) {
+            var bestRunText = "";
+            var runPercentClasses = "col-run-pct";
+            var ownedSymbol;
+            var ownedClasses = "col-owned";
+            if (kolmafia.haveFamiliar(fam) ||
+                terrariumFamiliars.has(fam) ||
+                familiarRuns.has(fam)) {
+                var bestRunRecord = familiarRuns.get(fam);
+                if (bestRunRecord) {
+                    var bestRunPercent = bestRunRecord.bestRunPercent;
+                    bestRunText = kolmafia.toString(bestRunPercent, "%.1f");
+                    if (bestRunPercent === 100) {
+                        // Perfect run
+                        runPercentClasses += " col-run-pct--perfect";
+                    }
+                    else if (bestRunPercent >= 90 && bestRunPercent < 100) {
+                        // Contributes to an Amateur/Professional Tour Guide trophy
+                        runPercentClasses += " col-run-pct--tourguide";
+                    }
                 }
-                else if (bestRunPercent >= 90 && bestRunPercent < 100) {
-                    // Contributes to an Amateur/Professional Tour Guide trophy
-                    runPercentClasses += " col-run-pct--tourguide";
-                }
+                ownedSymbol = "&#x2714;"; // Checkmark
+                ownedClasses += " col-owned--yes";
             }
-            ownedSymbol = "&#x2714;"; // Checkmark
-            ownedClasses += " col-owned--yes";
-        }
-        else {
-            ownedSymbol = "&#x2718;"; // X mark
-            ownedClasses += " col-owned--no";
-        }
-        html += "\n    <tr>\n      <td class=\"col-img\"><img src=\"/images/itemimages/" + fam.image + "\"></td>\n      <td>" + String(fam) + "</td>\n      <td class=\"" + ownedClasses + "\">" + ownedSymbol + "</td>\n      <td class=\"" + runPercentClasses + "\">" + bestRunText + "</td>\n    </tr>";
-    }
-    html += "\n  </tbody>\n</table>\n";
-    return html;
+            else {
+                ownedSymbol = "&#x2718;"; // X mark
+                ownedClasses += " col-owned--no";
+            }
+            return (vhtml("tr", null,
+                vhtml("td", { class: "col-img" },
+                    vhtml("img", { src: "/images/itemimages/" + fam.image })),
+                vhtml("td", null, String(fam)),
+                vhtml("td", { class: ownedClasses, dangerouslySetInnerHTML: { __html: ownedSymbol } }),
+                vhtml("td", { class: runPercentClasses }, bestRunText)));
+        }))));
 }
 /**
  * Entrypoint of the relay script
  */
 function main() {
-    kolmafia_1.write("<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>100familiars</title>\n    <script src=\"/100familiars/tablesort.min.js\"></script>\n    <script src=\"/100familiars/tablesort.number.min.js\"></script>\n    <link rel=\"stylesheet\" href=\"/100familiars/tablesort.css\">\n    <link rel=\"stylesheet\" href=\"/100familiars/style.css\">\n  </head>\n  <body>");
-    kolmafia_1.write(generateFamiliarTable());
-    kolmafia_1.write("\n  <script>\n    new Tablesort(document.getElementsByClassName('familiars')[0]);\n  </script>\n  </body>\n</html>");
+    kolmafia.write("<!DOCTYPE html>" +
+        (vhtml("html", { lang: "en" },
+            vhtml("head", null,
+                vhtml("meta", { charSet: "UTF-8" }),
+                vhtml("meta", { name: "viewport", content: "width=device-width, initial-scale=1.0" }),
+                vhtml("title", null, "100familiars"),
+                vhtml("script", { src: "/100familiars/tablesort.min.js" }),
+                vhtml("script", { src: "/100familiars/tablesort.number.min.js" }),
+                vhtml("link", { rel: "stylesheet", href: "/100familiars/tablesort.css" }),
+                vhtml("link", { rel: "stylesheet", href: "/100familiars/style.css" })),
+            vhtml("body", null,
+                generateFamiliarTable(),
+                vhtml("script", { dangerouslySetInnerHTML: {
+                        __html: "new Tablesort(document.getElementsByClassName('familiars')[0]);",
+                    } })))));
 }
-exports.main = main;
 /**
  * Checks if the current KoLmafia's revision number is same or greater than
  * `revision`.
@@ -163,7 +279,9 @@ function sinceKolmafiaRevision(revision) {
         throw new TypeError("Invalid revision number " + revision + " (must be an integer)");
     }
     // Based on net.sourceforge.kolmafia.textui.Parser.sinceException()
-    if (kolmafia_1.getRevision() < revision) {
-        throw new KolmafiaVersionError("This script requires revision r" + revision + " of kolmafia or higher (current: " + kolmafia_1.getRevision() + "). Up-to-date builds can be found at https://ci.kolmafia.us/.");
+    if (kolmafia.getRevision() < revision) {
+        throw new KolmafiaVersionError("This script requires revision r" + revision + " of kolmafia or higher (current: " + kolmafia.getRevision() + "). Up-to-date builds can be found at https://ci.kolmafia.us/.");
     }
 }
+
+exports.main = main;
