@@ -6,50 +6,47 @@
  * https://kolmafia.us/threads/familiar-collector-ascension-familiar-chooser.7433/
  */
 
-"use strict";
-
-const {
+import {
   getRevision,
   haveFamiliar,
   myId,
   print,
   toFamiliar,
-  toString: formatString,
+  toString as formatString,
   visitUrl,
-  writeln,
+  write,
   xpath,
-} = require("kolmafia");
+} from "kolmafia";
 
 /**
  * Represents an exception thrown when the current KoLmafia version does not
  * match an expected condition.
- * @param {string} [message]
- * @class
  */
-function KolmafiaVersionError(message) {
-  this.name = "KolmafiaVersionError";
-  this.message = message;
+class KolmafiaVersionError extends Error {
+  constructor(message?: string) {
+    super(message);
+  }
 }
-KolmafiaVersionError.prototype = Object.create(Error.prototype);
 
 sinceKolmafiaRevision(20550);
 
 /**
- * @typedef {object} FamiliarRunInfo
- *    Represents information about a single familiar % run.
- * @property {number} bestRunPercent
- *    Highest familiar % ever achieved in a run with this familiar
+ * Represents information about a single familiar % run.
  */
+interface FamiliarRunInfo {
+  /**
+   * Highest familiar % ever achieved in a run with this familiar
+   */
+  bestRunPercent: number;
+}
 
 /**
  * Retrieves your highest familiar % run records.
  * For convenience, this does NOT check pre-NS13 ascension records.
- * @returns {Map<Familiar, FamiliarRunInfo>}
- *    Mapping of familiar => best familiar run info
+ * @returns Mapping of familiar => best familiar run info
  */
-function getFamiliarRuns() {
-  /** @type {Map<Familiar, FamiliarRunInfo>} */
-  const runs = new Map();
+function getFamiliarRuns(): Map<Familiar, FamiliarRunInfo> {
+  const runs = new Map<Familiar, FamiliarRunInfo>();
 
   const page = visitUrl("ascensionhistory.php?who=" + myId());
   const nodes = xpath(page, '//table[@id="history"]//tr[position() > 1]//img');
@@ -87,12 +84,11 @@ function getFamiliarRuns() {
  * Check your terrarium to see what familiars you have.
  * This function is needed because `haveFamiliar()` always returns `false` if
  * you are in a challenge path that restricts familiars (e.g. Avatar of Boris).
- * @returns {Familiar[]} Array of familiars in your terrarium. This may not
- *    include your currently active familiar.
+ * @returns Array of familiars in your terrarium. This may not include your
+ *    currently active familiar.
  */
-function getTerrarium() {
-  /** @type {Familiar[]} */
-  const terrariumFamiliars = [];
+function getTerrarium(): Familiar[] {
+  const terrariumFamiliars: Familiar[] = [];
   const page = visitUrl("familiar.php");
   const familiarIdPattern = /fam\((\d+)\)/g;
   let match;
@@ -124,17 +120,17 @@ function getTerrarium() {
  * @returns {string} HTML for the familiar table
  */
 function generateFamiliarTable() {
-  let html =
-    '<table class="familiars">\n' +
-    "  <thead>\n" +
-    "    <tr>\n" +
-    '      <th class="no-sort" data-sort-method="none"></th>\n' +
-    "      <th>Familiar</th>\n" +
-    "      <th>Owned?</th>\n" +
-    "      <th>Best Run %</th>\n" +
-    "    </tr>\n" +
-    "  </thead>\n" +
-    "  <tbody>\n";
+  let html = `
+<table class="familiars">
+  <thead>
+    <tr>
+      <th class="no-sort" data-sort-method="none"></th>
+      <th>Familiar</th>
+      <th>Owned?</th>
+      <th>Best Run %</th>
+    </tr>
+  </thead>
+  <tbody>`;
 
   const familiarRuns = getFamiliarRuns();
   const terrariumFamiliars = new Set(getTerrarium());
@@ -171,77 +167,69 @@ function generateFamiliarTable() {
       ownedClasses += " col-owned--no";
     }
 
-    let imageUrl = "/images/itemimages/" + fam.image;
-
-    html += "    <tr>\n";
-    html += '      <td class="col-img"><img src="' + imageUrl + '"></td>\n';
-    html += "      <td>" + fam + "</td>\n";
-    html += '      <td class="' + ownedClasses + '">' + ownedSymbol + "</td>\n";
-    html +=
-      '      <td class="' + runPercentClasses + '">' + bestRunText + "</td>\n";
-    html += "    </tr>\n";
+    html += `
+    <tr>
+      <td class="col-img"><img src="/images/itemimages/${fam.image}"></td>
+      <td>${String(fam)}</td>
+      <td class="${ownedClasses}">${ownedSymbol}</td>
+      <td class="${runPercentClasses}">${bestRunText}</td>
+    </tr>`;
   }
 
-  html += "  </tbody>\n</table>\n";
+  html += `
+  </tbody>
+</table>
+`;
   return html;
 }
 
 /**
  * Entrypoint of the relay script
  */
-module.exports.main = () => {
-  writeln("<!DOCTYPE html>");
-  writeln('<html lang="en">');
-  writeln("  <head>");
-  writeln('    <meta charset="UTF-8" />');
-  writeln(
-    '    <meta name="viewport" content="width=device-width, initial-scale=1.0" />'
-  );
-  writeln("    <title>100familiars</title>");
-  writeln('    <script src="/100familiars/tablesort.min.js"></script>');
-  writeln('    <script src="/100familiars/tablesort.number.min.js"></script>');
-  writeln('    <link rel="stylesheet" href="/100familiars/tablesort.css">');
-  writeln('    <link rel="stylesheet" href="/100familiars/style.css">');
-  writeln("  </head>");
-  writeln("  <body>");
+export function main() {
+  write(`<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>100familiars</title>
+    <script src="/100familiars/tablesort.min.js"></script>
+    <script src="/100familiars/tablesort.number.min.js"></script>
+    <link rel="stylesheet" href="/100familiars/tablesort.css">
+    <link rel="stylesheet" href="/100familiars/style.css">
+  </head>
+  <body>`);
 
-  writeln(generateFamiliarTable());
+  write(generateFamiliarTable());
 
-  writeln("  <script>");
-  writeln(
-    "    new Tablesort(document.getElementsByClassName('familiars')[0]);"
-  );
-  writeln("  </script>");
-  writeln("  </body>");
-  writeln("  </body>");
-  writeln("  </body>");
-  writeln("</html>");
-};
+  write(`
+  <script>
+    new Tablesort(document.getElementsByClassName('familiars')[0]);
+  </script>
+  </body>
+</html>`);
+}
 
 /**
  * Checks if the current KoLmafia's revision number is same or greater than
  * `revision`.
  * This behaves like the `since rXXX;` statement in ASH.
- * @param {number} revision Revision number
+ * @param revision Revision number
  * @throws {KolmafiaVersionError} If the current KoLmafia's revision number is
  *    less than `revision`.
  * @throws {TypeError} If `revision` is not an integer
  */
-function sinceKolmafiaRevision(revision) {
+function sinceKolmafiaRevision(revision: number) {
   if (!Number.isInteger(revision)) {
     throw new TypeError(
-      "Invalid revision number " + revision + " (must be an integer)"
+      `Invalid revision number ${revision} (must be an integer)`
     );
   }
 
   // Based on net.sourceforge.kolmafia.textui.Parser.sinceException()
   if (getRevision() < revision) {
     throw new KolmafiaVersionError(
-      "This script requires requires revision r" +
-        revision +
-        " of kolmafia or higher (current: " +
-        getRevision() +
-        "). Up-to-date builds can be found at https://ci.kolmafia.us/."
+      `This script requires revision r${revision} of kolmafia or higher (current: ${getRevision()}). Up-to-date builds can be found at https://ci.kolmafia.us/.`
     );
   }
 }

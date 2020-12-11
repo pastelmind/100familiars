@@ -11,14 +11,15 @@
   },
   "devDependencies": {
     "@types/node": "^10.17.48",
+    "commander": "^6.2.0",
     "kolmafia": "^1.0.3",
     "prettier": "^2.2.1",
     "typescript": "^4.1.2"
   },
   "scripts": {
-    "postinstall": "npm run update-deps && prettier --write .",
-    "test": "tsc -p jsconfig.json && tsc -p node-scripts/jsconfig.json && prettier --check .",
-    "update-deps": "node node-scripts/update-deps.js"
+    "build": "tsc",
+    "release": "npm run build && node node-scripts/do-release.js",
+    "test": "tsc --noEmit && tsc -p node-scripts/jsconfig.json && prettier --check ."
   },
   "repository": {
     "type": "git",

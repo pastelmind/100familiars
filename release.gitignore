@@ -1,0 +1,15 @@
+# .gitignore for release branch
+
+# Ignore everything except files and directories allowed by KoLmafia
+# See https://wiki.kolmafia.us/index.php/SVN_Primer#Specifications
+/*
+!/ccs/
+!/data/
+!/images/
+!/planting/
+!/relay/
+!/scripts/
+!/dependencies.txt
+
+# Exclude TypeScript files
+*.ts
