@@ -10,7 +10,3 @@
 !/relay/
 !/scripts/
 !/dependencies.txt
-
-# Exclude TypeScript files
-*.ts
-*.tsx

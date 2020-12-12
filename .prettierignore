@@ -1,3 +1,2 @@
-# Ignore TypeScript build artifacts
-/relay/*.js
-/scripts/*.js
+# Ignore build artifacts, dependencies, and other release files
+/dist

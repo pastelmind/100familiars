@@ -3,9 +3,25 @@
  */
 
 const { execSync } = require("child_process");
-const { copyFileSync } = require("fs");
 
 const { program } = require("commander");
+const { copySync } = require("fs-extra");
+
+/**
+ * Temporary directory used to store build artifacts and dependencies.
+ * This must be .gitignore-ed!
+ */
+const DIST_DIR = "dist";
+
+/**
+ * .gitignore file to filter out everything that does not belong in the release
+ * branch.
+ */
+const RELEASE_GITIGNORE = "release.gitignore";
+/**
+ * Where the release.gitignore file will be copied to during the release process
+ */
+const RELEASE_GITIGNORE_TEMP = "temp/release.gitignore";
 
 /**
  * @param {string} cmd
@@ -25,16 +41,17 @@ function updateReleaseBranch(releaseBranch, commitMessage) {
   const PREV_POS = execSync("git name-rev --name-only HEAD", {
     encoding: "utf8",
   });
+  // Copy release.gitignore to temp dir so that it survives the branch switch
+  copySync(RELEASE_GITIGNORE, RELEASE_GITIGNORE_TEMP);
 
   try {
-    // Switch to release branch without changing the working directory.
-    // This preserves the current working directory and index
-    // Taken from https://stackoverflow.com/a/6070417
-    run(`git symbolic-ref HEAD refs/heads/${releaseBranch}`);
-    // Synchronize the index (but not the working tree) with the release branch
-    run("git reset --quiet");
+    // Switch to release branch.
+    // Since DIST_DIR is .gitignore-ed, it will be preserved after the switch.
+    run(`git switch ${releaseBranch}`);
+    // Copy contents of dist/ into project root (moveSync fails)
+    copySync(DIST_DIR, ".");
     // Stage release-worthy files
-    run("git -c core.excludesFile=release.gitignore add .");
+    run(`git -c core.excludesFile=${RELEASE_GITIGNORE_TEMP} add .`);
     // Create a new commit
     run("git commit -F -", {
       input: commitMessage ? commitMessage : "New release",
@@ -46,12 +63,11 @@ function updateReleaseBranch(releaseBranch, commitMessage) {
   }
 }
 
-const FILES_TO_COPY = {
-  "node_modules/tablesort/dist/sorts/tablesort.number.min.js":
-    "relay/100familiars/tablesort.number.min.js",
-  "node_modules/tablesort/dist/tablesort.min.js":
-    "relay/100familiars/tablesort.min.js",
-  "node_modules/tablesort/tablesort.css": "relay/100familiars/tablesort.css",
+const FILES_AND_DIRS_TO_COPY = {
+  "relay/100familiars/": `${DIST_DIR}/relay/100familiars/`,
+  "node_modules/tablesort/dist/sorts/tablesort.number.min.js": `${DIST_DIR}/relay/100familiars/tablesort.number.min.js`,
+  "node_modules/tablesort/dist/tablesort.min.js": `${DIST_DIR}/relay/100familiars/tablesort.min.js`,
+  "node_modules/tablesort/tablesort.css": `${DIST_DIR}/relay/100familiars/tablesort.css`,
 };
 
 /**
@@ -64,9 +80,9 @@ function main(argv) {
     .option("--branch <name>", "Name of the release branch", "release")
     .action((commitMessage, cmd) => {
       try {
-        for (const [source, dest] of Object.entries(FILES_TO_COPY)) {
-          console.log(`Copying ${source} -> ${dest}`);
-          copyFileSync(source, dest);
+        for (const [source, dest] of Object.entries(FILES_AND_DIRS_TO_COPY)) {
+          console.log(`Copying: ${source} -> ${dest}`);
+          copySync(source, dest);
         }
 
         updateReleaseBranch(cmd.branch, commitMessage);

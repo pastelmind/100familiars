@@ -5,7 +5,7 @@ import typescript from "@rollup/plugin-typescript";
 const options = {
   input: "relay/relay_100familiars.tsx",
   output: {
-    dir: "relay",
+    dir: "dist/relay",
     format: "cjs",
   },
   external: "kolmafia",

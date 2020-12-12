@@ -112,3 +112,6 @@ dist
 
 # Local History for Visual Studio Code
 .history/
+
+# Temporary directory used during release
+/temp/
