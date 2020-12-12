@@ -15,6 +15,7 @@
     "@rollup/plugin-typescript": "^8.0.0",
     "@types/node": "^10.17.48",
     "commander": "^6.2.0",
+    "fs-extra": "^9.0.1",
     "kolmafia": "^1.0.3",
     "preact": "^10.5.7",
     "prettier": "^2.2.1",
