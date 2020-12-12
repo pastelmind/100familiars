@@ -7,5 +7,8 @@ declare module "vhtml" {
 
   // Let's borrow JSX types from Preact
   import { JSX } from "preact";
-  export import JSX = JSX;
+  namespace JSX {
+    export import IntrinsicElements = JSX.IntrinsicElements;
+    export type Element = string;
+  }
 }
