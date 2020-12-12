@@ -27,7 +27,8 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "release": "npm run build && node node-scripts/do-release.js",
+    "clean": "rimraf dist",
+    "release": "npm run clean && npm run build && node node-scripts/do-release.js",
     "test": "tsc --noEmit && tsc -p node-scripts/jsconfig.json && prettier --check ."
   },
   "repository": {
