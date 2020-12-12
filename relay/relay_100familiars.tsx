@@ -119,9 +119,9 @@ function getTerrarium(): Familiar[] {
 
 /**
  * Generates a sortable HTML table of all familiars.
- * @returns {string} HTML for the familiar table
+ * @returns HTML for the familiar table
  */
-function generateFamiliarTable() {
+function generateFamiliarTable(): string {
   const familiarRuns = getFamiliarRuns();
   const terrariumFamiliars = new Set(getTerrarium());
 
@@ -190,7 +190,7 @@ function generateFamiliarTable() {
 /**
  * Entrypoint of the relay script
  */
-export function main() {
+export function main(): void {
   write(
     "<!DOCTYPE html>" +
     (
@@ -230,7 +230,7 @@ export function main() {
  *    less than `revision`.
  * @throws {TypeError} If `revision` is not an integer
  */
-function sinceKolmafiaRevision(revision: number) {
+function sinceKolmafiaRevision(revision: number): void {
   if (!Number.isInteger(revision)) {
     throw new TypeError(
       `Invalid revision number ${revision} (must be an integer)`
