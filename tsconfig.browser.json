@@ -5,27 +5,13 @@
     /* Basic Options */
     // "incremental": true,                   /* Enable incremental compilation */
     /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
-    "target": "es5",
+    "target": "ES2018",
     /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
     "module": "ES2015",
-    /* Specify library files to be included in the compilation. */
-    "lib": [
-      "ES5",
-      "es2015.collection",
-      "es2015.core",
-      "es2015.generator",
-      "es2015.iterable",
-      "es2015.symbol",
-      "es2015.symbol.wellknown",
-      "es2016.array.include",
-      "es2017.string",
-      "es2019.string"
-    ],
+    // "lib": [],                             /* Specify library files to be included in the compilation. */
     // "allowJs": true,                       /* Allow javascript files to be compiled. */
     // "checkJs": true,                       /* Report errors in .js files. */
-    /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
-    "jsx": "react",
-    "jsxFactory": "h",
+    // "jsx": "preserve",                     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
     // "declaration": true,                   /* Generates corresponding '.d.ts' file. */
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
@@ -59,15 +45,14 @@
     // "noUncheckedIndexedAccess": true,      /* Include 'undefined' in index signature results */
 
     /* Module Resolution Options */
-    /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
-    "moduleResolution": "node",
+    // "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
     // "baseUrl": "./",                       /* Base directory to resolve non-absolute module names. */
     // "paths": {},                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
     /* Type declaration files to be included in compilation. */
-    // (Disallow @types/node in JS scripts inside release/*)
-    "types": [],
+    /* (Only allow using APIs available inside the browser) */
+    "types": ["datatables.net"],
     // "allowSyntheticDefaultImports": true,  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
     /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
     "esModuleInterop": true,
@@ -90,5 +75,5 @@
     /* Disallow inconsistently-cased references to the same file. */
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node-scripts", "relay/100familiars"]
+  "include": ["relay/100familiars"]
 }
