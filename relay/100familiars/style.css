@@ -20,6 +20,7 @@
   width: 32px;
 }
 
+.col-familiar-id,
 .col-owned,
 .col-run-pct {
   text-align: center;
@@ -45,4 +46,14 @@
     rgba(204, 255, 102, 0.5),
     rgba(204, 255, 102, 0.5)
   );
+}
+
+.col-links {
+  font-size: 50%;
+  text-align: center;
+}
+
+.link-image {
+  height: 15px;
+  width: 15px;
 }
