@@ -7,6 +7,7 @@
  */
 
 import {
+  entityDecode,
   getRevision,
   haveFamiliar,
   myId,
@@ -60,7 +61,7 @@ function getFamiliarRuns(): Map<Familiar, FamiliarRunInfo> {
 
     // Use toFamiliar() because Familiar.get() crashes if it encounters an
     // unknown familiar name
-    let familiarName = match[1];
+    let familiarName = entityDecode(match[1]);
     let fam = toFamiliar(familiarName);
     let runPercent = parseFloat(match[2]);
 
