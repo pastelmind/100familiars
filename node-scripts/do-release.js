@@ -48,6 +48,8 @@ function updateReleaseBranch(releaseBranch, commitMessage) {
     // Switch to release branch.
     // Since DIST_DIR is .gitignore-ed, it will be preserved after the switch.
     run(`git switch ${releaseBranch}`);
+    // Delete all previously committed files in the release branch
+    run(`git rm -r .`);
     // Copy contents of dist/ into project root (moveSync fails)
     copySync(DIST_DIR, ".");
     // Stage release-worthy files
