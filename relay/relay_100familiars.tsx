@@ -130,11 +130,12 @@ function FamiliarTable(): string {
     <table
       class="familiars display compact"
       data-length-menu='[[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]]'
-      data-order="[]"
+      data-order='[[1, "asc"]]'
     >
       <thead>
         <tr>
           <th data-orderable="false"></th>
+          <th>ID</th>
           <th>Familiar</th>
           <th>Owned?</th>
           <th>Best Run %</th>
@@ -178,6 +179,7 @@ function FamiliarTable(): string {
               <td class="col-img">
                 <img src={"/images/itemimages/" + fam.image} />
               </td>
+              <td class="col-familiar-id">{Number(fam)}</td>
               <td>{String(fam)}</td>
               <td
                 class={ownedClasses}
