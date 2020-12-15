@@ -25,3 +25,19 @@ svn checkout https://github.com/pastelmind/100familiars/branches/release
 ## Screenshots
 
 ![100familiars in action](screenshots/100familiars-screenshot-1.png)
+
+## Development
+
+To create a new release, run:
+
+```
+npm run release [commit message]
+```
+
+This compiles and bundles the relay script, copies minified dependencies, and commits them to the `release` branch. You can optionally provide a custom commit message.
+
+To use another release branch (for testing), use:
+
+```
+npm run release -- --branch <branch_name> [commit message]
+```
