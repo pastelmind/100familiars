@@ -188,18 +188,28 @@ function FamiliarTable(): string {
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  [description]
+                  <img
+                    class="link-image"
+                    src="images/otherimages/tinyglass.gif"
+                    alt="See in-game description"
+                    title="See in-game description"
+                  />
                 </a>
                 &nbsp;
                 <a
                   href={
-                    "http://kol.coldfront.net/thekolwiki/index.php/" +
+                    "https://kol.coldfront.net/thekolwiki/index.php/" +
                     encodeURI(String(fam))
                   }
                   rel="noreferrer noopener"
                   target="_blank"
                 >
-                  [wiki]
+                  <img
+                    class="link-image"
+                    src="images/otherimages/letters/w.gif"
+                    alt="Visit KoL wiki"
+                    title="Visit KoL wiki"
+                  />
                 </a>
               </td>
               <td
