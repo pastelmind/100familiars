@@ -130,12 +130,14 @@ function FamiliarTable(): string {
     <table
       class="familiars display compact"
       data-length-menu='[[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]]'
-      data-order="[]"
+      data-order='[[1, "asc"]]'
     >
       <thead>
         <tr>
           <th data-orderable="false"></th>
+          <th>ID</th>
           <th>Familiar</th>
+          <th data-orderable="false">Links</th>
           <th>Owned?</th>
           <th>Best Run %</th>
         </tr>
@@ -178,7 +180,39 @@ function FamiliarTable(): string {
               <td class="col-img">
                 <img src={"/images/itemimages/" + fam.image} />
               </td>
+              <td class="col-familiar-id">{Number(fam)}</td>
               <td>{String(fam)}</td>
+              <td class="col-links">
+                <a
+                  class="popup-link"
+                  href={"/desc_familiar.php?which=" + Number(fam)}
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  <img
+                    class="link-image"
+                    src="images/otherimages/tinyglass.gif"
+                    alt="See in-game description"
+                    title="See in-game description"
+                  />
+                </a>
+                &nbsp;
+                <a
+                  href={
+                    "https://kol.coldfront.net/thekolwiki/index.php/" +
+                    encodeURI(String(fam))
+                  }
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  <img
+                    class="link-image"
+                    src="images/otherimages/letters/w.gif"
+                    alt="Visit KoL wiki"
+                    title="Visit KoL wiki"
+                  />
+                </a>
+              </td>
               <td
                 class={ownedClasses}
                 dangerouslySetInnerHTML={{ __html: ownedSymbol }}
@@ -210,6 +244,7 @@ export function main(): void {
           <script src="/100familiars/jquery.slim.min.js"></script>
           <script src="/100familiars/jquery.Datatables.min.js"></script>
           <script src="/100familiars/dataTables.dataTables.min.js"></script>
+          <script src="/100familiars/100familiars.js"></script>
           <link
             rel="stylesheet"
             href="/images/100familiars/css/jquery.Datatables.min.css"
@@ -218,11 +253,6 @@ export function main(): void {
         </head>
         <body>
           <FamiliarTable />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: "$(() => { $('.familiars').DataTable(); });",
-            }}
-          ></script>
         </body>
       </html>
     )
