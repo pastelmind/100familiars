@@ -148,7 +148,7 @@ function getFamiliarRuns() {
             continue;
         // Use toFamiliar() because Familiar.get() crashes if it encounters an
         // unknown familiar name
-        var familiarName = match[1];
+        var familiarName = kolmafia.entityDecode(match[1]);
         var fam = kolmafia.toFamiliar(familiarName);
         var runPercent = parseFloat(match[2]);
         // Skip unknown familiar
@@ -202,11 +202,13 @@ function getTerrarium() {
 function FamiliarTable() {
     var familiarRuns = getFamiliarRuns();
     var terrariumFamiliars = new Set(getTerrarium());
-    return (vhtml("table", { class: "familiars display compact", "data-length-menu": '[[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]]', "data-order": "[]" },
+    return (vhtml("table", { class: "familiars display compact", "data-length-menu": '[[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]]', "data-order": '[[1, "asc"]]' },
         vhtml("thead", null,
             vhtml("tr", null,
                 vhtml("th", { "data-orderable": "false" }),
+                vhtml("th", null, "ID"),
                 vhtml("th", null, "Familiar"),
+                vhtml("th", { "data-orderable": "false" }, "Links"),
                 vhtml("th", null, "Owned?"),
                 vhtml("th", null, "Best Run %"))),
         vhtml("tbody", null, Familiar.all().map(function (fam) {
@@ -240,7 +242,15 @@ function FamiliarTable() {
             return (vhtml("tr", null,
                 vhtml("td", { class: "col-img" },
                     vhtml("img", { src: "/images/itemimages/" + fam.image })),
+                vhtml("td", { class: "col-familiar-id" }, Number(fam)),
                 vhtml("td", null, String(fam)),
+                vhtml("td", { class: "col-links" },
+                    vhtml("a", { class: "popup-link", href: "/desc_familiar.php?which=" + Number(fam), rel: "noreferrer noopener", target: "_blank" },
+                        vhtml("img", { class: "link-image", src: "images/otherimages/tinyglass.gif", alt: "See in-game description", title: "See in-game description" })),
+                    "\u00A0",
+                    vhtml("a", { href: "https://kol.coldfront.net/thekolwiki/index.php/" +
+                            encodeURI(String(fam)), rel: "noreferrer noopener", target: "_blank" },
+                        vhtml("img", { class: "link-image", src: "images/otherimages/letters/w.gif", alt: "Visit KoL wiki", title: "Visit KoL wiki" }))),
                 vhtml("td", { class: ownedClasses, dangerouslySetInnerHTML: { __html: ownedSymbol } }),
                 vhtml("td", { class: runPercentClasses }, bestRunText)));
         }))));
@@ -258,13 +268,11 @@ function main() {
                 vhtml("script", { src: "/100familiars/jquery.slim.min.js" }),
                 vhtml("script", { src: "/100familiars/jquery.Datatables.min.js" }),
                 vhtml("script", { src: "/100familiars/dataTables.dataTables.min.js" }),
+                vhtml("script", { src: "/100familiars/100familiars.js" }),
                 vhtml("link", { rel: "stylesheet", href: "/images/100familiars/css/jquery.Datatables.min.css" }),
                 vhtml("link", { rel: "stylesheet", href: "/100familiars/style.css" })),
             vhtml("body", null,
-                vhtml(FamiliarTable, null),
-                vhtml("script", { dangerouslySetInnerHTML: {
-                        __html: "$(() => { $('.familiars').DataTable(); });",
-                    } })))));
+                vhtml(FamiliarTable, null)))));
 }
 /**
  * Checks if the current KoLmafia's revision number is same or greater than
