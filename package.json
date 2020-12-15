@@ -29,7 +29,7 @@
     "build": "rollup -c",
     "clean": "rimraf dist",
     "release": "npm run clean && npm run build && node node-scripts/do-release.js",
-    "test": "tsc --noEmit && tsc -p node-scripts/jsconfig.json && prettier --check ."
+    "test": "tsc --noEmit && tsc -p jsconfig.json && prettier --check ."
   },
   "repository": {
     "type": "git",
