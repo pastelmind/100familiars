@@ -137,6 +137,7 @@ function FamiliarTable(): string {
           <th data-orderable="false"></th>
           <th>ID</th>
           <th>Familiar</th>
+          <th data-orderable="false">Links</th>
           <th>Owned?</th>
           <th>Best Run %</th>
         </tr>
@@ -181,6 +182,26 @@ function FamiliarTable(): string {
               </td>
               <td class="col-familiar-id">{Number(fam)}</td>
               <td>{String(fam)}</td>
+              <td class="col-links">
+                <a
+                  href={"/desc_familiar.php?which=" + Number(fam)}
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  [description]
+                </a>
+                &nbsp;
+                <a
+                  href={
+                    "http://kol.coldfront.net/thekolwiki/index.php/" +
+                    encodeURI(String(fam))
+                  }
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
+                  [wiki]
+                </a>
+              </td>
               <td
                 class={ownedClasses}
                 dangerouslySetInnerHTML={{ __html: ownedSymbol }}
