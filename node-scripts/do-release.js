@@ -24,6 +24,11 @@ const RELEASE_GITIGNORE = "release.gitignore";
 const RELEASE_GITIGNORE_TEMP = "temp/release.gitignore";
 
 /**
+ * Default release branch name
+ */
+const RELEASE_BRANCH_DEFAULT = "release";
+
+/**
  * @param {string} cmd
  * @param {Parameters<execSync>[1]} [options]
  */
@@ -79,15 +84,30 @@ const FILES_AND_DIRS_TO_COPY = {
 function main(argv) {
   program
     .arguments("[commit_message]")
-    .option("--branch <name>", "Name of the release branch", "release")
+    .option(
+      "--branch <name>",
+      "Name of the release branch",
+      RELEASE_BRANCH_DEFAULT
+    )
+    .option("--no-commit", "Don't make a commit. Cannot be used with --branch.")
     .action((commitMessage, cmd) => {
+      if (!cmd.commit && cmd.branch !== RELEASE_BRANCH_DEFAULT) {
+        console.error("Error: --branch cannot be used with --no-commit");
+        process.exitCode = 1;
+        return;
+      }
+
       try {
         for (const [source, dest] of Object.entries(FILES_AND_DIRS_TO_COPY)) {
           console.log(`Copying: ${source} -> ${dest}`);
           copySync(source, dest);
         }
 
-        updateReleaseBranch(cmd.branch, commitMessage);
+        if (cmd.commit) {
+          updateReleaseBranch(cmd.branch, commitMessage);
+        } else if (commitMessage) {
+          console.warn("Warning: Commit message is ignored due to --no-commit");
+        }
       } catch (e) {
         console.error(e);
         process.exitCode = 1;

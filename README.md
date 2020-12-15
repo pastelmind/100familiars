@@ -41,3 +41,9 @@ To use another release branch (for testing), use:
 ```
 npm run release -- --branch <branch_name> [commit message]
 ```
+
+To build without committing to a release branch:
+
+```
+npm run release -- --no-
+```
