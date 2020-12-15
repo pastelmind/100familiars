@@ -73,5 +73,6 @@
     "skipLibCheck": true,
     /* Disallow inconsistently-cased references to the same file. */
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["**/*.ts", "**/*.tsx", "dist"]
 }
