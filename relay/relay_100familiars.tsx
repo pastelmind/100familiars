@@ -184,6 +184,7 @@ function FamiliarTable(): string {
               <td>{String(fam)}</td>
               <td class="col-links">
                 <a
+                  class="popup-link"
                   href={"/desc_familiar.php?which=" + Number(fam)}
                   rel="noreferrer noopener"
                   target="_blank"
@@ -243,6 +244,7 @@ export function main(): void {
           <script src="/100familiars/jquery.slim.min.js"></script>
           <script src="/100familiars/jquery.Datatables.min.js"></script>
           <script src="/100familiars/dataTables.dataTables.min.js"></script>
+          <script src="/100familiars/100familiars.js"></script>
           <link
             rel="stylesheet"
             href="/images/100familiars/css/jquery.Datatables.min.css"
@@ -251,11 +253,6 @@ export function main(): void {
         </head>
         <body>
           <FamiliarTable />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: "$(() => { $('.familiars').DataTable(); });",
-            }}
-          ></script>
         </body>
       </html>
     )
