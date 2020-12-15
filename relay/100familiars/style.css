@@ -1,24 +1,18 @@
-.familiars {
-  background-color: #ffffff;
-  margin: 0 auto;
-}
-
-.familiars th,
-.familiars td:not(.col-img) {
-  padding: 0 0.5em;
-}
-
-.familiars th {
-  background-color: #cccccc;
-}
-
-.familiars tbody tr:nth-child(2n) {
-  background-color: #eeeeee;
+.familiars,
+.dataTables_wrapper {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 50rem;
+  width: 100%;
 }
 
 .col-img {
+  /* Override background color set by DataTables, because KoL images have white
+  backgrounds and look ugly against non-white backgrounds. */
+  background-color: #ffffff !important;
   /* Leave as little margin as possible on <img> */
   line-height: 0;
+  text-align: center;
 }
 
 .col-img > img {
@@ -40,17 +34,15 @@
 }
 
 .col-run-pct--perfect {
-  background-color: #99ff99;
-}
-
-.familiars tbody tr:nth-child(2n) .col-run-pct--perfect {
-  background-color: #88ee88;
+  background-image: linear-gradient(
+    rgba(153, 255, 153, 0.5),
+    rgba(153, 255, 153, 0.5)
+  );
 }
 
 .col-run-pct--tourguide {
-  background-color: #ccff66;
-}
-
-.familiars tbody tr:nth-child(2n) .col-run-pct--tourguide {
-  background-color: #bbee55;
+  background-image: linear-gradient(
+    rgba(204, 255, 102, 0.5),
+    rgba(204, 255, 102, 0.5)
+  );
 }

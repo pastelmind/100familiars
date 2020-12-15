@@ -121,15 +121,19 @@ function getTerrarium(): Familiar[] {
  * Generates a sortable HTML table of all familiars.
  * @returns HTML for the familiar table
  */
-function generateFamiliarTable(): string {
+function FamiliarTable(): string {
   const familiarRuns = getFamiliarRuns();
   const terrariumFamiliars = new Set(getTerrarium());
 
   return (
-    <table class="familiars">
+    <table
+      class="familiars display compact"
+      data-length-menu='[[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]]'
+      data-order="[]"
+    >
       <thead>
         <tr>
-          <th class="no-sort" data-sort-method="none"></th>
+          <th data-orderable="false"></th>
           <th>Familiar</th>
           <th>Owned?</th>
           <th>Best Run %</th>
@@ -202,17 +206,20 @@ export function main(): void {
             content="width=device-width, initial-scale=1.0"
           />
           <title>100familiars</title>
-          <script src="/100familiars/tablesort.min.js"></script>
-          <script src="/100familiars/tablesort.number.min.js"></script>
-          <link rel="stylesheet" href="/100familiars/tablesort.css" />
+          <script src="/100familiars/jquery.slim.min.js"></script>
+          <script src="/100familiars/jquery.Datatables.min.js"></script>
+          <script src="/100familiars/dataTables.dataTables.min.js"></script>
+          <link
+            rel="stylesheet"
+            href="/images/100familiars/css/jquery.Datatables.min.css"
+          />
           <link rel="stylesheet" href="/100familiars/style.css" />
         </head>
         <body>
-          {generateFamiliarTable()}
+          <FamiliarTable />
           <script
             dangerouslySetInnerHTML={{
-              __html:
-                "new Tablesort(document.getElementsByClassName('familiars')[0]);",
+              __html: "$(() => { $('.familiars').DataTable(); });",
             }}
           ></script>
         </body>

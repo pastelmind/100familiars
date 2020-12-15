@@ -70,11 +70,22 @@ function updateReleaseBranch(releaseBranch, commitMessage) {
   }
 }
 
+// Copy DataTables images to /images/100familiars/, because KoLmafia does not
+// serve images inside /relay/
+// Also copy DataTables CSS to /images/100familiars/, because it expects the
+// images to be in ../images/
 const FILES_AND_DIRS_TO_COPY = {
+  "node_modules/datatables.net-dt/css/jquery.Datatables.min.css": `${DIST_DIR}/images/100familiars/css/jquery.Datatables.min.css`,
+  "node_modules/datatables.net-dt/images/sort_asc_disabled.png": `${DIST_DIR}/images/100familiars/images/sort_asc_disabled.png`,
+  "node_modules/datatables.net-dt/images/sort_asc.png": `${DIST_DIR}/images/100familiars/images/sort_asc.png`,
+  "node_modules/datatables.net-dt/images/sort_both.png": `${DIST_DIR}/images/100familiars/images/sort_both.png`,
+  "node_modules/datatables.net-dt/images/sort_desc_disabled.png": `${DIST_DIR}/images/100familiars/images/sort_desc_disabled.png`,
+  "node_modules/datatables.net-dt/images/sort_desc.png": `${DIST_DIR}/images/100familiars/images/sort_desc.png`,
+  "node_modules/datatables.net-dt/js/dataTables.dataTables.min.js": `${DIST_DIR}/relay/100familiars/dataTables.dataTables.min.js`,
+  "node_modules/datatables.net/js/jquery.Datatables.min.js": `${DIST_DIR}/relay/100familiars/jquery.Datatables.min.js`,
+  "node_modules/jquery/dist/jquery.slim.min.js": `${DIST_DIR}/relay/100familiars/jquery.slim.min.js`,
+  "node_modules/jquery/dist/jquery.slim.min.map": `${DIST_DIR}/relay/100familiars/jquery.slim.min.map`,
   "relay/100familiars/": `${DIST_DIR}/relay/100familiars/`,
-  "node_modules/tablesort/dist/sorts/tablesort.number.min.js": `${DIST_DIR}/relay/100familiars/tablesort.number.min.js`,
-  "node_modules/tablesort/dist/tablesort.min.js": `${DIST_DIR}/relay/100familiars/tablesort.min.js`,
-  "node_modules/tablesort/tablesort.css": `${DIST_DIR}/relay/100familiars/tablesort.css`,
 };
 
 /**
