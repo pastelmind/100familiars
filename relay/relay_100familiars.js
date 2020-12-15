@@ -197,15 +197,15 @@ function getTerrarium() {
 }
 /**
  * Generates a sortable HTML table of all familiars.
- * @returns {string} HTML for the familiar table
+ * @returns HTML for the familiar table
  */
-function generateFamiliarTable() {
+function FamiliarTable() {
     var familiarRuns = getFamiliarRuns();
     var terrariumFamiliars = new Set(getTerrarium());
-    return (vhtml("table", { class: "familiars" },
+    return (vhtml("table", { class: "familiars display compact", "data-length-menu": '[[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]]', "data-order": "[]" },
         vhtml("thead", null,
             vhtml("tr", null,
-                vhtml("th", { class: "no-sort", "data-sort-method": "none" }),
+                vhtml("th", { "data-orderable": "false" }),
                 vhtml("th", null, "Familiar"),
                 vhtml("th", null, "Owned?"),
                 vhtml("th", null, "Best Run %"))),
@@ -255,14 +255,15 @@ function main() {
                 vhtml("meta", { charSet: "UTF-8" }),
                 vhtml("meta", { name: "viewport", content: "width=device-width, initial-scale=1.0" }),
                 vhtml("title", null, "100familiars"),
-                vhtml("script", { src: "/100familiars/tablesort.min.js" }),
-                vhtml("script", { src: "/100familiars/tablesort.number.min.js" }),
-                vhtml("link", { rel: "stylesheet", href: "/100familiars/tablesort.css" }),
+                vhtml("script", { src: "/100familiars/jquery.slim.min.js" }),
+                vhtml("script", { src: "/100familiars/jquery.Datatables.min.js" }),
+                vhtml("script", { src: "/100familiars/dataTables.dataTables.min.js" }),
+                vhtml("link", { rel: "stylesheet", href: "/images/100familiars/css/jquery.Datatables.min.css" }),
                 vhtml("link", { rel: "stylesheet", href: "/100familiars/style.css" })),
             vhtml("body", null,
-                generateFamiliarTable(),
+                vhtml(FamiliarTable, null),
                 vhtml("script", { dangerouslySetInnerHTML: {
-                        __html: "new Tablesort(document.getElementsByClassName('familiars')[0]);",
+                        __html: "$(() => { $('.familiars').DataTable(); });",
                     } })))));
 }
 /**
