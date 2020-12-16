@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "datatables.net-dt": "^1.10.22",
+    "preact-render-to-string": "^5.1.12",
     "vhtml": "^2.2.0"
   },
   "devDependencies": {
