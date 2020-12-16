@@ -19,7 +19,8 @@ import {
   xpath,
 } from "kolmafia";
 
-import h from "vhtml";
+import React from "react";
+import ReactDOMServer from "react-dom/server";
 
 /**
  * Represents an exception thrown when the current KoLmafia version does not
@@ -122,13 +123,13 @@ function getTerrarium(): Familiar[] {
  * Generates a sortable HTML table of all familiars.
  * @returns HTML for the familiar table
  */
-function FamiliarTable(): string {
+function FamiliarTable(): JSX.Element {
   const familiarRuns = getFamiliarRuns();
   const terrariumFamiliars = new Set(getTerrarium());
 
   return (
     <table
-      class="familiars display compact"
+      className="familiars display compact"
       data-length-menu='[[-1, 10, 25, 50, 100], ["All", 10, 25, 50, 100]]'
       data-order='[[1, "asc"]]'
     >
@@ -177,20 +178,20 @@ function FamiliarTable(): string {
 
           return (
             <tr>
-              <td class="col-img">
+              <td className="col-img">
                 <img src={"/images/itemimages/" + fam.image} />
               </td>
-              <td class="col-familiar-id">{Number(fam)}</td>
+              <td className="col-familiar-id">{Number(fam)}</td>
               <td>{String(fam)}</td>
-              <td class="col-links">
+              <td className="col-links">
                 <a
-                  class="popup-link"
+                  className="popup-link"
                   href={"/desc_familiar.php?which=" + Number(fam)}
                   rel="noreferrer noopener"
                   target="_blank"
                 >
                   <img
-                    class="link-image"
+                    className="link-image"
                     src="images/otherimages/tinyglass.gif"
                     alt="See in-game description"
                     title="See in-game description"
@@ -206,7 +207,7 @@ function FamiliarTable(): string {
                   target="_blank"
                 >
                   <img
-                    class="link-image"
+                    className="link-image"
                     src="images/otherimages/letters/w.gif"
                     alt="Visit KoL wiki"
                     title="Visit KoL wiki"
@@ -214,10 +215,10 @@ function FamiliarTable(): string {
                 </a>
               </td>
               <td
-                class={ownedClasses}
+                className={ownedClasses}
                 dangerouslySetInnerHTML={{ __html: ownedSymbol }}
               ></td>
-              <td class={runPercentClasses}>{bestRunText}</td>
+              <td className={runPercentClasses}>{bestRunText}</td>
             </tr>
           );
         })}
@@ -232,30 +233,30 @@ function FamiliarTable(): string {
 export function main(): void {
   write(
     "<!DOCTYPE html>" +
-    (
-      <html lang="en">
-        <head>
-          <meta charSet="UTF-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <title>100familiars</title>
-          <script src="/100familiars/jquery.slim.min.js"></script>
-          <script src="/100familiars/jquery.Datatables.min.js"></script>
-          <script src="/100familiars/dataTables.dataTables.min.js"></script>
-          <script src="/100familiars/100familiars.js"></script>
-          <link
-            rel="stylesheet"
-            href="/images/100familiars/css/jquery.Datatables.min.css"
-          />
-          <link rel="stylesheet" href="/100familiars/style.css" />
-        </head>
-        <body>
-          <FamiliarTable />
-        </body>
-      </html>
-    )
+      ReactDOMServer.renderToStaticMarkup(
+        <html lang="en">
+          <head>
+            <meta charSet="UTF-8" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0"
+            />
+            <title>100familiars</title>
+            <script src="/100familiars/jquery.slim.min.js"></script>
+            <script src="/100familiars/jquery.Datatables.min.js"></script>
+            <script src="/100familiars/dataTables.dataTables.min.js"></script>
+            <script src="/100familiars/100familiars.js"></script>
+            <link
+              rel="stylesheet"
+              href="/images/100familiars/css/jquery.Datatables.min.css"
+            />
+            <link rel="stylesheet" href="/100familiars/style.css" />
+          </head>
+          <body>
+            <FamiliarTable />
+          </body>
+        </html>
+      )
   );
 }
 
