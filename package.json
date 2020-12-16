@@ -11,7 +11,9 @@
     "vhtml": "^2.2.0"
   },
   "devDependencies": {
+    "@pastelmind/vhtml-types": "^0.1.0",
     "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-typescript": "^8.0.0",
     "@types/datatables.net": "^1.10.19",
     "@types/fs-extra": "^9.0.5",
@@ -19,7 +21,6 @@
     "commander": "^6.2.0",
     "fs-extra": "^9.0.1",
     "kolmafia": "^1.0.3",
-    "preact": "^10.5.7",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.34.2",
