@@ -7,7 +7,9 @@
     "node": ">=10"
   },
   "dependencies": {
-    "datatables.net-dt": "^1.10.22"
+    "datatables.net-dt": "^1.10.22",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -16,6 +18,8 @@
     "@types/datatables.net": "^1.10.19",
     "@types/fs-extra": "^9.0.5",
     "@types/node": "^10.17.48",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "commander": "^6.2.0",
     "fs-extra": "^9.0.1",
     "kolmafia": "^1.0.3",
