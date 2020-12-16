@@ -19,6 +19,26 @@ import {
   xpath,
 } from "kolmafia";
 
+/**
+ * Dumb polyfill for `setTimeout()` because Rhino doesn't have one.
+ * @param expr Function or JavaScript expression
+ * @param msec This is ignored, the function will always immediately and
+ *    synchronously execute `expr`.
+ * @param args Arguments to call `expr()` with
+ */
+function setTimeout(
+  expr: Function | string,
+  msec: number,
+  ...args: any[]
+): number {
+  if (typeof expr === "function") {
+    expr.apply(globalThis, args);
+  } else {
+    eval(expr);
+  }
+  return 0;
+}
+
 import { h, JSX } from "preact";
 import render from "preact-render-to-string";
 
