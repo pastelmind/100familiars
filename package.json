@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-typescript": "^8.0.0",
     "@types/datatables.net": "^1.10.19",
     "@types/fs-extra": "^9.0.5",
