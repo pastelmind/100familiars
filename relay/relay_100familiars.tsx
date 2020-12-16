@@ -26,9 +26,10 @@ import {
  *    synchronously execute `expr`.
  * @param args Arguments to call `expr()` with
  */
-function setTimeout(
+// Dummy export to prevent TypeScript stripping this out
+globalThis.setTimeout = function setTimeout(
   expr: Function | string,
-  msec: number,
+  msec?: number,
   ...args: any[]
 ): number {
   if (typeof expr === "function") {
@@ -37,7 +38,7 @@ function setTimeout(
     eval(expr);
   }
   return 0;
-}
+};
 
 import { h, JSX } from "preact";
 import render from "preact-render-to-string";
