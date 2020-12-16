@@ -19,7 +19,8 @@ import {
   xpath,
 } from "kolmafia";
 
-import h from "vhtml";
+import { h, JSX } from "preact";
+import render from "preact-render-to-string";
 
 /**
  * Represents an exception thrown when the current KoLmafia version does not
@@ -122,7 +123,7 @@ function getTerrarium(): Familiar[] {
  * Generates a sortable HTML table of all familiars.
  * @returns HTML for the familiar table
  */
-function FamiliarTable(): string {
+function FamiliarTable(): JSX.Element {
   const familiarRuns = getFamiliarRuns();
   const terrariumFamiliars = new Set(getTerrarium());
 
@@ -232,30 +233,30 @@ function FamiliarTable(): string {
 export function main(): void {
   write(
     "<!DOCTYPE html>" +
-    (
-      <html lang="en">
-        <head>
-          <meta charSet="UTF-8" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
-          <title>100familiars</title>
-          <script src="/100familiars/jquery.slim.min.js"></script>
-          <script src="/100familiars/jquery.Datatables.min.js"></script>
-          <script src="/100familiars/dataTables.dataTables.min.js"></script>
-          <script src="/100familiars/100familiars.js"></script>
-          <link
-            rel="stylesheet"
-            href="/images/100familiars/css/jquery.Datatables.min.css"
-          />
-          <link rel="stylesheet" href="/100familiars/style.css" />
-        </head>
-        <body>
-          <FamiliarTable />
-        </body>
-      </html>
-    )
+      render(
+        <html lang="en">
+          <head>
+            <meta charSet="UTF-8" />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0"
+            />
+            <title>100familiars</title>
+            <script src="/100familiars/jquery.slim.min.js"></script>
+            <script src="/100familiars/jquery.Datatables.min.js"></script>
+            <script src="/100familiars/dataTables.dataTables.min.js"></script>
+            <script src="/100familiars/100familiars.js"></script>
+            <link
+              rel="stylesheet"
+              href="/images/100familiars/css/jquery.Datatables.min.css"
+            />
+            <link rel="stylesheet" href="/100familiars/style.css" />
+          </head>
+          <body>
+            <FamiliarTable />
+          </body>
+        </html>
+      )
   );
 }
 
