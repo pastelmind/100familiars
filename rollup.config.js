@@ -1,4 +1,5 @@
 import commonjs from "@rollup/plugin-commonjs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 
 /** @type {import("rollup").RollupOptions} */
@@ -9,7 +10,7 @@ const kolmafiaScriptOptions = {
     format: "cjs",
   },
   external: "kolmafia",
-  plugins: [commonjs(), typescript()],
+  plugins: [nodeResolve(), commonjs(), typescript()],
 };
 
 /** @type {import("rollup").RollupOptions} */
