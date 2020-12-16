@@ -7,8 +7,7 @@
     "node": ">=10"
   },
   "dependencies": {
-    "datatables.net-dt": "^1.10.22",
-    "vhtml": "^2.2.0"
+    "datatables.net-dt": "^1.10.22"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -20,7 +19,6 @@
     "commander": "^6.2.0",
     "fs-extra": "^9.0.1",
     "kolmafia": "^1.0.3",
-    "preact": "^10.5.7",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.34.2",
