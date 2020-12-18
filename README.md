@@ -45,5 +45,5 @@ npm run release -- --branch <branch_name> [commit message]
 To build without committing to a release branch:
 
 ```
-npm run release -- --no-
+npm run release -- --no-commit
 ```
