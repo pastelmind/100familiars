@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "datatables.net-dt": "^1.10.23",
+    "kolmafia-util": "^0.1.1",
     "vhtml": "^2.2.0"
   },
   "devDependencies": {
