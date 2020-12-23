@@ -262,7 +262,7 @@ function main() {
     kolmafia.write("<!DOCTYPE html>" +
         (vhtml("html", { lang: "en" },
             vhtml("head", null,
-                vhtml("meta", { charSet: "UTF-8" }),
+                vhtml("meta", { charset: "UTF-8" }),
                 vhtml("meta", { name: "viewport", content: "width=device-width, initial-scale=1.0" }),
                 vhtml("title", null, "100familiars"),
                 vhtml("script", { src: "/100familiars/jquery.slim.min.js" }),
