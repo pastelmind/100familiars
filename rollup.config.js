@@ -9,6 +9,9 @@ const kolmafiaScriptOptions = {
     dir: "dist/relay",
     format: "cjs",
   },
+  // Transpiled 3rd-party code uses 'this' at module root.
+  // Don't change foreign code so that they operate properly
+  context: "this",
   external: "kolmafia",
   plugins: [nodeResolve(), commonjs(), typescript()],
 };
