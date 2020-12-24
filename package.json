@@ -12,13 +12,13 @@
     "vhtml": "^2.2.0"
   },
   "devDependencies": {
-    "@pastelmind/vhtml-types": "^0.1.0",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.1",
     "@rollup/plugin-typescript": "^8.1.0",
     "@types/datatables.net": "^1.10.19",
     "@types/fs-extra": "^9.0.5",
     "@types/node": "^10.17.49",
+    "@types/vhtml": "^2.2.0",
     "commander": "^6.2.1",
     "fs-extra": "^9.0.1",
     "kolmafia": "^1.0.3",
