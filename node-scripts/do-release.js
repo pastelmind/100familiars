@@ -4,6 +4,7 @@
 
 const { execSync } = require("child_process");
 
+const chalk = require("chalk");
 const { program } = require("commander");
 const { copySync } = require("fs-extra");
 
@@ -33,7 +34,7 @@ const RELEASE_BRANCH_DEFAULT = "release";
  * @param {Parameters<execSync>[1]} [options]
  */
 function run(cmd, options) {
-  console.log("Executing:", cmd);
+  console.log(chalk.green("Executing:", cmd));
   execSync(cmd, { stdio: "inherit", ...options });
 }
 
@@ -110,7 +111,7 @@ function main(argv) {
 
       try {
         for (const [source, dest] of Object.entries(FILES_AND_DIRS_TO_COPY)) {
-          console.log(`Copying: ${source} -> ${dest}`);
+          console.log(chalk.green(`Copying: ${source} -> ${dest}`));
           copySync(source, dest);
         }
 
