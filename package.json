@@ -22,7 +22,7 @@
     "chalk": "^4.1.0",
     "commander": "^6.2.1",
     "fs-extra": "^9.0.1",
-    "kolmafia": "^1.0.3",
+    "kolmafia": "npm:kolmafia-types@0.0.3",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.35.1",
