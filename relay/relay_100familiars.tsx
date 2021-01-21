@@ -92,8 +92,6 @@ function getTerrarium(): Familiar[] {
     // This is why we're using Familiar.get() here, despite knowing that it will
     // crash if KoLmafia encounters an unknown familiar ID.
     let familiarId = Number(match[1]);
-    // @ts-expect-error kolmafia-js 1.0.3 is missing type definitions for
-    // Familiar.get() that accepts numbers
     let fam = Familiar.get(familiarId);
 
     // Skip unknown familiar
