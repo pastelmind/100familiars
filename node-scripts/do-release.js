@@ -102,8 +102,8 @@ function main(argv) {
       RELEASE_BRANCH_DEFAULT
     )
     .option("--no-commit", "Don't make a commit. Cannot be used with --branch.")
-    .action((commitMessage, cmd) => {
-      if (!cmd.commit && cmd.branch !== RELEASE_BRANCH_DEFAULT) {
+    .action((commitMessage, options) => {
+      if (!options.commit && options.branch !== RELEASE_BRANCH_DEFAULT) {
         console.error("Error: --branch cannot be used with --no-commit");
         process.exitCode = 1;
         return;
@@ -115,8 +115,8 @@ function main(argv) {
           copySync(source, dest);
         }
 
-        if (cmd.commit) {
-          updateReleaseBranch(cmd.branch, commitMessage);
+        if (options.commit) {
+          updateReleaseBranch(options.branch, commitMessage);
         } else if (commitMessage) {
           console.warn("Warning: Commit message is ignored due to --no-commit");
         }
