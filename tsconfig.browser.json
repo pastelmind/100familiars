@@ -75,5 +75,5 @@
     /* Disallow inconsistently-cased references to the same file. */
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["relay/100familiars"]
+  "include": ["src/relay/100familiars"]
 }

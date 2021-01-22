@@ -86,7 +86,7 @@ const FILES_AND_DIRS_TO_COPY = {
   "node_modules/datatables.net/js/jquery.Datatables.min.js": `${DIST_DIR}/relay/100familiars/jquery.Datatables.min.js`,
   "node_modules/jquery/dist/jquery.slim.min.js": `${DIST_DIR}/relay/100familiars/jquery.slim.min.js`,
   "node_modules/jquery/dist/jquery.slim.min.map": `${DIST_DIR}/relay/100familiars/jquery.slim.min.map`,
-  "relay/100familiars/style.css": `${DIST_DIR}/relay/100familiars/style.css`,
+  "src/relay/100familiars/style.css": `${DIST_DIR}/relay/100familiars/style.css`,
 };
 
 /**
