@@ -21,8 +21,10 @@
       "es2017.string",
       "es2019.string"
     ],
-    // "allowJs": true,                       /* Allow javascript files to be compiled. */
-    // "checkJs": true,                       /* Report errors in .js files. */
+    /* Allow javascript files to be compiled. */
+    "allowJs": true,
+    /* Report errors in .js files. */
+    "checkJs": true,
     /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
     "jsx": "react",
     "jsxFactory": "h",
@@ -91,5 +93,5 @@
     /* Disallow inconsistently-cased references to the same file. */
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node-scripts", "src/relay/100familiars"]
+  "exclude": ["dist", "src/relay/100familiars"]
 }
