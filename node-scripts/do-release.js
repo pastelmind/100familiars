@@ -83,20 +83,9 @@ function main(argv) {
       "Name of the release branch",
       RELEASE_BRANCH_DEFAULT
     )
-    .option("--no-commit", "Don't make a commit. Cannot be used with --branch.")
     .action((commitMessage, options) => {
-      if (!options.commit && options.branch !== RELEASE_BRANCH_DEFAULT) {
-        console.error("Error: --branch cannot be used with --no-commit");
-        process.exitCode = 1;
-        return;
-      }
-
       try {
-        if (options.commit) {
-          updateReleaseBranch(options.branch, commitMessage);
-        } else if (commitMessage) {
-          console.warn("Warning: Commit message is ignored due to --no-commit");
-        }
+        updateReleaseBranch(options.branch, commitMessage);
       } catch (e) {
         console.error(e);
         process.exitCode = 1;
