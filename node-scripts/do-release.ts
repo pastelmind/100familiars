@@ -2,11 +2,9 @@
  * @file Commits build artifacts and dependencies to the release branch.
  */
 
-import { execSync } from "child_process";
-
-import chalk from "chalk";
 import { program } from "commander";
-import { copySync } from "fs-extra";
+import { copy } from "fs-extra";
+import simpleGit, { GitError } from "simple-git";
 
 /**
  * Temporary directory used to store build artifacts and dependencies.
@@ -29,41 +27,62 @@ const RELEASE_GITIGNORE_TEMP = "temp/release.gitignore";
  */
 const RELEASE_BRANCH_DEFAULT = "release";
 
-function run(cmd: string, options?: Parameters<typeof execSync>[1]) {
-  console.log(chalk.green("Executing:", cmd));
-  execSync(cmd, { stdio: "inherit", ...options });
-}
-
 /**
  * Commit all build artifacts and copied dependencies to the release branch.
  * @param releaseBranch Release branch name
  * @param commitMessage Commit message
  */
-function updateReleaseBranch(releaseBranch: string, commitMessage?: string) {
-  const PREV_POS = execSync("git name-rev --name-only HEAD", {
-    encoding: "utf8",
-  });
+async function updateReleaseBranch(
+  releaseBranch: string,
+  commitMessage?: string
+) {
+  const git = simpleGit();
+
+  // Retrieve the current branch, tag, or commit name
+  const prevPos = (await git.raw("name-rev", "--name-only", "HEAD")).trim();
+
   // Copy release.gitignore to temp dir so that it survives the branch switch
-  copySync(RELEASE_GITIGNORE, RELEASE_GITIGNORE_TEMP);
+  await copy(RELEASE_GITIGNORE, RELEASE_GITIGNORE_TEMP);
 
   try {
     // Switch to release branch.
     // Since DIST_DIR is .gitignore-ed, it will be preserved after the switch.
-    run(`git switch ${releaseBranch}`);
+    await git.checkout(releaseBranch);
+
     // Delete all previously committed files in the release branch
-    run(`git rm -r .`);
-    // Copy distributables into project root (moveSync fails)
-    copySync(DIST_DIR, ".");
+    try {
+      await git.rm("*");
+    } catch (e) {
+      if (
+        e instanceof GitError &&
+        e.message.includes("did not match any files")
+      ) {
+        // Print error but continue
+        console.warn(e.message);
+      } else {
+        throw e;
+      }
+    }
+
+    // Copy distributables into project root (move fails)
+    await copy(DIST_DIR, ".");
+
     // Stage release-worthy files
-    run(`git -c core.excludesFile=${RELEASE_GITIGNORE_TEMP} add .`);
+    await git.addConfig("core.excludesFile", RELEASE_GITIGNORE_TEMP);
+    await git.add(".");
+
     // Create a new commit
-    run("git commit -F -", {
-      input: commitMessage ?? "New release",
-      stdio: ["pipe", "inherit", "inherit"],
-    });
+    const commitResult = await git.commit(commitMessage ?? "New release");
+    if (commitResult.commit) {
+      console.log(
+        `Created new commit ${commitResult.commit} at branch ${commitResult.branch}`
+      );
+    } else {
+      console.log("No change detected, commit not created");
+    }
   } finally {
     // Switch back to previous branch or commit
-    run(`git switch --force ${PREV_POS}`);
+    await git.checkout(prevPos);
   }
 }
 
@@ -78,9 +97,9 @@ function main(argv: string[]) {
       "Name of the release branch",
       RELEASE_BRANCH_DEFAULT
     )
-    .action((commitMessage, options) => {
+    .action(async (commitMessage, options) => {
       try {
-        updateReleaseBranch(options.branch, commitMessage);
+        await updateReleaseBranch(options.branch, commitMessage);
       } catch (e) {
         console.error(e);
         process.exitCode = 1;
