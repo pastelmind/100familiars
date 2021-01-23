@@ -20,7 +20,11 @@ const kolmafiaScriptOptions = {
   // Don't change foreign code so that they operate properly
   context: "this",
   external: "kolmafia",
-  plugins: [nodeResolve(), commonjs(), typescript()],
+  plugins: [
+    nodeResolve(),
+    commonjs(),
+    typescript({ module: "ES2015", outDir: `${DIST_DIR}/relay` }),
+  ],
 };
 
 /** @type {import("rollup").RollupOptions} */

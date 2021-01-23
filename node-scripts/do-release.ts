@@ -2,11 +2,11 @@
  * @file Commits build artifacts and dependencies to the release branch.
  */
 
-const { execSync } = require("child_process");
+import { execSync } from "child_process";
 
-const chalk = require("chalk");
-const { program } = require("commander");
-const { copySync } = require("fs-extra");
+import chalk from "chalk";
+import { program } from "commander";
+import { copySync } from "fs-extra";
 
 /**
  * Temporary directory used to store build artifacts and dependencies.
@@ -29,21 +29,17 @@ const RELEASE_GITIGNORE_TEMP = "temp/release.gitignore";
  */
 const RELEASE_BRANCH_DEFAULT = "release";
 
-/**
- * @param {string} cmd
- * @param {Parameters<execSync>[1]} [options]
- */
-function run(cmd, options) {
+function run(cmd: string, options?: Parameters<typeof execSync>[1]) {
   console.log(chalk.green("Executing:", cmd));
   execSync(cmd, { stdio: "inherit", ...options });
 }
 
 /**
  * Commit all build artifacts and copied dependencies to the release branch.
- * @param {string} releaseBranch Release branch name
- * @param {string} [commitMessage] Commit message
+ * @param releaseBranch Release branch name
+ * @param commitMessage Commit message
  */
-function updateReleaseBranch(releaseBranch, commitMessage) {
+function updateReleaseBranch(releaseBranch: string, commitMessage?: string) {
   const PREV_POS = execSync("git name-rev --name-only HEAD", {
     encoding: "utf8",
   });
@@ -62,7 +58,7 @@ function updateReleaseBranch(releaseBranch, commitMessage) {
     run(`git -c core.excludesFile=${RELEASE_GITIGNORE_TEMP} add .`);
     // Create a new commit
     run("git commit -F -", {
-      input: commitMessage ? commitMessage : "New release",
+      input: commitMessage ?? "New release",
       stdio: ["pipe", "inherit", "inherit"],
     });
   } finally {
@@ -73,9 +69,8 @@ function updateReleaseBranch(releaseBranch, commitMessage) {
 
 /**
  * Script entrypoint
- * @param {string[]} argv
  */
-function main(argv) {
+function main(argv: string[]) {
   program
     .arguments("[commit_message]")
     .option(
