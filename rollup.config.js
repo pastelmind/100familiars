@@ -7,7 +7,7 @@ import copy from "rollup-plugin-copy";
  * Temporary directory used to store build artifacts and dependencies.
  * This must be .gitignore-ed!
  */
-const DIST_DIR = "dist";
+const DIST_DIR = "build/dist";
 
 /** @type {import("rollup").RollupOptions} */
 const kolmafiaScriptOptions = {
