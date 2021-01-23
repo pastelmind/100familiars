@@ -93,5 +93,5 @@
     /* Disallow inconsistently-cased references to the same file. */
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["dist", "src/relay/100familiars"]
+  "exclude": ["build", "src/relay/100familiars"]
 }

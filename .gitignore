@@ -113,5 +113,7 @@ dist
 # Local History for Visual Studio Code
 .history/
 
+# Directory for build artifacts and assets
+/build/
 # Temporary directory used during release
 /temp/

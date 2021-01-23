@@ -12,7 +12,7 @@ const { copySync } = require("fs-extra");
  * Temporary directory used to store build artifacts and dependencies.
  * This must be .gitignore-ed!
  */
-const DIST_DIR = "dist";
+const DIST_DIR = "build/dist";
 
 /**
  * .gitignore file to filter out everything that does not belong in the release
@@ -56,7 +56,7 @@ function updateReleaseBranch(releaseBranch, commitMessage) {
     run(`git switch ${releaseBranch}`);
     // Delete all previously committed files in the release branch
     run(`git rm -r .`);
-    // Copy contents of dist/ into project root (moveSync fails)
+    // Copy distributables into project root (moveSync fails)
     copySync(DIST_DIR, ".");
     // Stage release-worthy files
     run(`git -c core.excludesFile=${RELEASE_GITIGNORE_TEMP} add .`);

@@ -1,2 +1,2 @@
 # Ignore build artifacts, dependencies, and other release files
-/dist
+/build/
