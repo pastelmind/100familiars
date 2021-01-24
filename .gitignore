@@ -115,5 +115,3 @@ dist
 
 # Directory for build artifacts and assets
 /build/
-# Temporary directory used during release
-/temp/
