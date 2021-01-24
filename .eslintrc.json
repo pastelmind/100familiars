@@ -1,0 +1,15 @@
+{
+  "extends": "./node_modules/gts/",
+  "parserOptions": {
+    // Needed for Rollup config
+    "sourceType": "module"
+  },
+  "rules": {
+    "node/no-unpublished-import": [
+      "error",
+      {
+        "allowModules": ["kolmafia"]
+      }
+    ]
+  }
+}

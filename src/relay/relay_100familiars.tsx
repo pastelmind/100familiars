@@ -16,10 +16,11 @@ import {
   visitUrl,
   write,
   xpath,
-} from "kolmafia";
-import { sinceKolmafiaRevision } from "kolmafia-util";
+} from 'kolmafia';
+import {sinceKolmafiaRevision} from 'kolmafia-util';
 
-import h from "vhtml";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import h from 'vhtml';
 
 sinceKolmafiaRevision(20550);
 
@@ -41,33 +42,33 @@ interface FamiliarRunInfo {
 function getFamiliarRuns(): Map<Familiar, FamiliarRunInfo> {
   const runs = new Map<Familiar, FamiliarRunInfo>();
 
-  const page = visitUrl("ascensionhistory.php?who=" + myId());
+  const page = visitUrl('ascensionhistory.php?who=' + myId());
   const nodes = xpath(page, '//table[@id="history"]//tr[position() > 1]//img');
 
-  for (let node of nodes) {
-    let match = /title="(.+?)\s*\((.+?)%/.exec(node);
+  for (const node of nodes) {
+    const match = /title="(.+?)\s*\((.+?)%/.exec(node);
     // Some challenge paths (e.g. Avatar of Boris) can have no familiar records
     if (!match) continue;
 
     // Use toFamiliar() because Familiar.get() crashes if it encounters an
     // unknown familiar name
-    let familiarName = entityDecode(match[1]);
-    let fam = toFamiliar(familiarName);
-    let runPercent = parseFloat(match[2]);
+    const familiarName = entityDecode(match[1]);
+    const fam = toFamiliar(familiarName);
+    const runPercent = parseFloat(match[2]);
 
     // Skip unknown familiar
-    if (fam === Familiar.get("none")) {
-      print("Unknown familiar name: " + familiarName, "red");
+    if (fam === Familiar.get('none')) {
+      print('Unknown familiar name: ' + familiarName, 'red');
       continue;
     }
 
     // Skip if this is not the best run for this familiar
-    let prevRecord = runs.get(fam);
+    const prevRecord = runs.get(fam);
     if (prevRecord && prevRecord.bestRunPercent >= runPercent) {
       continue;
     }
 
-    runs.set(fam, { bestRunPercent: runPercent });
+    runs.set(fam, {bestRunPercent: runPercent});
   }
 
   return runs;
@@ -82,7 +83,7 @@ function getFamiliarRuns(): Map<Familiar, FamiliarRunInfo> {
  */
 function getTerrarium(): Familiar[] {
   const terrariumFamiliars: Familiar[] = [];
-  const page = visitUrl("familiar.php");
+  const page = visitUrl('familiar.php');
   const familiarIdPattern = /fam\((\d+)\)/g;
   let match;
 
@@ -91,12 +92,12 @@ function getTerrarium(): Familiar[] {
     // incorrectly return Familiar.get("none").
     // This is why we're using Familiar.get() here, despite knowing that it will
     // crash if KoLmafia encounters an unknown familiar ID.
-    let familiarId = Number(match[1]);
-    let fam = Familiar.get(familiarId);
+    const familiarId = Number(match[1]);
+    const fam = Familiar.get(familiarId);
 
     // Skip unknown familiar
-    if (fam === Familiar.get("none")) {
-      print("Unknown familiar ID: " + familiarId, "red");
+    if (fam === Familiar.get('none')) {
+      print('Unknown familiar ID: ' + familiarId, 'red');
       continue;
     }
 
@@ -131,49 +132,49 @@ function FamiliarTable(): string {
         </tr>
       </thead>
       <tbody>
-        {Familiar.all().map((fam) => {
-          let bestRunText = "";
-          let runPercentClasses = "col-run-pct";
+        {Familiar.all().map(fam => {
+          let bestRunText = '';
+          let runPercentClasses = 'col-run-pct';
           let ownedSymbol;
-          let ownedClasses = "col-owned";
+          let ownedClasses = 'col-owned';
 
           if (
             haveFamiliar(fam) ||
             terrariumFamiliars.has(fam) ||
             familiarRuns.has(fam)
           ) {
-            let bestRunRecord = familiarRuns.get(fam);
+            const bestRunRecord = familiarRuns.get(fam);
             if (bestRunRecord) {
-              let { bestRunPercent } = bestRunRecord;
-              bestRunText = formatString(bestRunPercent, "%.1f");
+              const {bestRunPercent} = bestRunRecord;
+              bestRunText = formatString(bestRunPercent, '%.1f');
 
               if (bestRunPercent === 100) {
                 // Perfect run
-                runPercentClasses += " col-run-pct--perfect";
+                runPercentClasses += ' col-run-pct--perfect';
               } else if (bestRunPercent >= 90 && bestRunPercent < 100) {
                 // Contributes to an Amateur/Professional Tour Guide trophy
-                runPercentClasses += " col-run-pct--tourguide";
+                runPercentClasses += ' col-run-pct--tourguide';
               }
             }
 
-            ownedSymbol = "&#x2714;"; // Checkmark
-            ownedClasses += " col-owned--yes";
+            ownedSymbol = '&#x2714;'; // Checkmark
+            ownedClasses += ' col-owned--yes';
           } else {
-            ownedSymbol = "&#x2718;"; // X mark
-            ownedClasses += " col-owned--no";
+            ownedSymbol = '&#x2718;'; // X mark
+            ownedClasses += ' col-owned--no';
           }
 
           return (
             <tr>
               <td class="col-img">
-                <img src={"/images/itemimages/" + fam.image} />
+                <img src={'/images/itemimages/' + fam.image} />
               </td>
               <td class="col-familiar-id">{Number(fam)}</td>
               <td>{String(fam)}</td>
               <td class="col-links">
                 <a
                   class="popup-link"
-                  href={"/desc_familiar.php?which=" + Number(fam)}
+                  href={'/desc_familiar.php?which=' + Number(fam)}
                   rel="noreferrer noopener"
                   target="_blank"
                 >
@@ -187,7 +188,7 @@ function FamiliarTable(): string {
                 &nbsp;
                 <a
                   href={
-                    "https://kol.coldfront.net/thekolwiki/index.php/" +
+                    'https://kol.coldfront.net/thekolwiki/index.php/' +
                     encodeURI(String(fam))
                   }
                   rel="noreferrer noopener"
@@ -203,7 +204,7 @@ function FamiliarTable(): string {
               </td>
               <td
                 class={ownedClasses}
-                dangerouslySetInnerHTML={{ __html: ownedSymbol }}
+                dangerouslySetInnerHTML={{__html: ownedSymbol}}
               ></td>
               <td class={runPercentClasses}>{bestRunText}</td>
             </tr>
@@ -219,7 +220,7 @@ function FamiliarTable(): string {
  */
 export function main(): void {
   write(
-    "<!DOCTYPE html>" +
+    '<!DOCTYPE html>' +
     (
       <html lang="en">
         <head>

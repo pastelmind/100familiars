@@ -2,26 +2,26 @@
  * @file Commits build artifacts and dependencies to the release branch.
  */
 
-import { program } from "commander";
-import { copy } from "fs-extra";
-import simpleGit, { GitError } from "simple-git";
+import {program} from 'commander';
+import {copy} from 'fs-extra';
+import simpleGit, {GitError} from 'simple-git';
 
 /**
  * Temporary directory used to store build artifacts and dependencies.
  * This must be .gitignore-ed!
  */
-const DIST_DIR = "build/dist";
+const DIST_DIR = 'build/dist';
 
 /**
  * .gitignore file to filter out everything that does not belong in the release
  * branch.
  */
-const RELEASE_GITIGNORE = "release.gitignore";
+const RELEASE_GITIGNORE = 'release.gitignore';
 
 /**
  * Default release branch name
  */
-const RELEASE_BRANCH_DEFAULT = "release";
+const RELEASE_BRANCH_DEFAULT = 'release';
 
 /**
  * Commit all build artifacts and copied dependencies to the release branch.
@@ -35,7 +35,7 @@ async function updateReleaseBranch(
   const git = simpleGit();
 
   // Retrieve the current branch, tag, or commit name
-  const prevPos = (await git.raw("name-rev", "--name-only", "HEAD")).trim();
+  const prevPos = (await git.raw('name-rev', '--name-only', 'HEAD')).trim();
 
   // Copy .gitignore to dist dir so that it can be copied back to root dir
   // before committing
@@ -48,11 +48,11 @@ async function updateReleaseBranch(
 
     // Delete all previously committed files in the release branch
     try {
-      await git.rm("*");
+      await git.rm('*');
     } catch (e) {
       if (
         e instanceof GitError &&
-        e.message.includes("did not match any files")
+        e.message.includes('did not match any files')
       ) {
         // Print error but continue
         console.warn(e.message);
@@ -62,19 +62,19 @@ async function updateReleaseBranch(
     }
 
     // Copy distributables into project root (move fails)
-    await copy(DIST_DIR, ".");
+    await copy(DIST_DIR, '.');
 
     // Stage release-worthy files
-    await git.add(".");
+    await git.add('.');
 
     // Create a new commit
-    const commitResult = await git.commit(commitMessage ?? "New release");
+    const commitResult = await git.commit(commitMessage ?? 'New release');
     if (commitResult.commit) {
       console.log(
         `Created new commit ${commitResult.commit} at branch ${commitResult.branch}`
       );
     } else {
-      console.log("No change detected, commit not created");
+      console.log('No change detected, commit not created');
     }
   } finally {
     // Switch back to previous branch or commit
@@ -87,10 +87,10 @@ async function updateReleaseBranch(
  */
 function main(argv: string[]) {
   program
-    .arguments("[commit_message]")
+    .arguments('[commit_message]')
     .option(
-      "--branch <name>",
-      "Name of the release branch",
+      '--branch <name>',
+      'Name of the release branch',
       RELEASE_BRANCH_DEFAULT
     )
     .action(async (commitMessage, options) => {
