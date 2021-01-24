@@ -19,7 +19,7 @@ function openPopup(
 ) {
   const popupWindow = open(
     url,
-    "_blank",
+    '_blank',
     `left=${left},top=${top},width=${width},height=${height}`
   );
   if (!popupWindow) {
@@ -32,9 +32,9 @@ function openPopup(
 
 $(() => {
   // Set up popups on familiar description links
-  $(".popup-link").on("click", function (e) {
+  $('.popup-link').on('click', e => {
     if (!(e.currentTarget instanceof HTMLAnchorElement)) {
-      console.error("%o is not an anchor", e.currentTarget);
+      console.error('%o is not an anchor', e.currentTarget);
       return;
     }
 
@@ -42,5 +42,5 @@ $(() => {
     openPopup(e.currentTarget.href, e.screenX, e.screenY, 400, 300);
   });
 
-  $(".familiars").DataTable();
+  $('.familiars').DataTable();
 });

@@ -1,9 +1,13 @@
 // Master config that executes all other configs
 {
+  "compilerOptions": {
+    // Needed for `gts clean`, nothing else
+    "outDir": "build"
+  },
   "files": [],
   "references": [
-    { "path": "node-scripts" },
-    { "path": "src" },
-    { "path": "src/relay/100familiars" }
+    {"path": "node-scripts"},
+    {"path": "src"},
+    {"path": "src/relay/100familiars"}
   ]
 }

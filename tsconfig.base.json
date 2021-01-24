@@ -1,12 +1,11 @@
 // Base tsconfig for all other configs
 {
+  "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "composite": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "outDir": "build",
     "rootDir": ".",
-    "skipLibCheck": true,
-    "strict": true
+    "skipLibCheck": true
   }
 }
