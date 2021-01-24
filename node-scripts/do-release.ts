@@ -17,10 +17,6 @@ const DIST_DIR = "build/dist";
  * branch.
  */
 const RELEASE_GITIGNORE = "release.gitignore";
-/**
- * Where the release.gitignore file will be copied to during the release process
- */
-const RELEASE_GITIGNORE_TEMP = "temp/release.gitignore";
 
 /**
  * Default release branch name
@@ -41,8 +37,9 @@ async function updateReleaseBranch(
   // Retrieve the current branch, tag, or commit name
   const prevPos = (await git.raw("name-rev", "--name-only", "HEAD")).trim();
 
-  // Copy release.gitignore to temp dir so that it survives the branch switch
-  await copy(RELEASE_GITIGNORE, RELEASE_GITIGNORE_TEMP);
+  // Copy .gitignore to dist dir so that it can be copied back to root dir
+  // before committing
+  await copy(RELEASE_GITIGNORE, `${DIST_DIR}/.gitignore`);
 
   try {
     // Switch to release branch.
@@ -68,7 +65,6 @@ async function updateReleaseBranch(
     await copy(DIST_DIR, ".");
 
     // Stage release-worthy files
-    await git.addConfig("core.excludesFile", RELEASE_GITIGNORE_TEMP);
     await git.add(".");
 
     // Create a new commit
