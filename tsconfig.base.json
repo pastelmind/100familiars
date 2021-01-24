@@ -1,0 +1,12 @@
+// Base tsconfig for all other configs
+{
+  "compilerOptions": {
+    "composite": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "build",
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "strict": true
+  }
+}

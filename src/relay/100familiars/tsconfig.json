@@ -1,0 +1,9 @@
+// Config for code that targets web browsers.
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "ES2015",
+    "target": "ES2018",
+    "types": ["datatables.net"]
+  }
+}

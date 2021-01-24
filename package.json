@@ -34,10 +34,10 @@
   "scripts": {
     "build": "rollup -c",
     "clean": "rimraf build",
-    "compile": "tsc",
+    "compile": "tsc -b",
     "release": "npm run clean && npm run compile && npm run build && node build/node-scripts/do-release.js",
     "pretest": "npm run compile",
-    "test": "tsc -p tsconfig.browser.json --noEmit && prettier --check ."
+    "test": "prettier --check ."
   },
   "repository": {
     "type": "git",

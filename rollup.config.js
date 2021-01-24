@@ -23,7 +23,13 @@ const kolmafiaScriptOptions = {
   plugins: [
     nodeResolve(),
     commonjs(),
-    typescript({ module: "ES2015", outDir: `${DIST_DIR}/relay` }),
+    typescript({
+      tsconfig: "src/tsconfig.json",
+      // Disable composite to prevent generating .tsbuildinfo files
+      composite: false,
+      module: "ES2015",
+      outDir: `${DIST_DIR}/relay`,
+    }),
   ],
 };
 
@@ -35,7 +41,12 @@ const browserScriptOptions = {
     format: "iife",
   },
   plugins: [
-    typescript({ tsconfig: "tsconfig.browser.json" }),
+    typescript({
+      tsconfig: "src/relay/100familiars/tsconfig.json",
+      // Disable composite to prevent generating .tsbuildinfo files
+      composite: false,
+      outDir: `${DIST_DIR}/relay/100familiars`,
+    }),
     copy({
       targets: [
         {

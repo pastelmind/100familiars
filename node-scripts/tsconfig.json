@@ -1,0 +1,9 @@
+// Config for Node.js scripts
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    // Compatible with Node.js v10
+    "target": "ES2018"
+  }
+}
