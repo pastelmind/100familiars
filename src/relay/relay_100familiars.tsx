@@ -12,6 +12,7 @@ import {
   myId,
   print,
   toFamiliar,
+  toInt,
   toString as formatString,
   visitUrl,
   write,
@@ -169,12 +170,12 @@ function FamiliarTable(): string {
               <td class="col-img">
                 <img src={'/images/itemimages/' + fam.image} />
               </td>
-              <td class="col-familiar-id">{Number(fam)}</td>
+              <td class="col-familiar-id">{toInt(fam)}</td>
               <td>{String(fam)}</td>
               <td class="col-links">
                 <a
                   class="popup-link"
-                  href={'/desc_familiar.php?which=' + Number(fam)}
+                  href={'/desc_familiar.php?which=' + toInt(fam)}
                   rel="noreferrer noopener"
                   target="_blank"
                 >
