@@ -29,6 +29,8 @@ const kolmafiaScriptOptions = {
       tsconfig: 'src/tsconfig.json',
       // Disable composite to prevent generating .tsbuildinfo files
       composite: false,
+      // Don't emit d.ts files
+      declaration: false,
       module: 'ES2015',
       outDir: `${DIST_DIR}/relay`,
       // Disable sourcemaps
@@ -49,6 +51,8 @@ const browserScriptOptions = {
       tsconfig: 'src/relay/100familiars/tsconfig.json',
       // Disable composite to prevent generating .tsbuildinfo files
       composite: false,
+      // Don't emit d.ts files
+      declaration: false,
       module: 'ES2015',
       outDir: `${DIST_DIR}/relay/100familiars`,
       // Disable sourcemaps
