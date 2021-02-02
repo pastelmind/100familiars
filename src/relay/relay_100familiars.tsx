@@ -89,11 +89,10 @@ function getTerrarium(): Familiar[] {
   let match;
 
   while ((match = familiarIdPattern.exec(page))) {
-    // As of r20550, toFamiliar() in JS has a bug where many familiar IDs
-    // incorrectly return Familiar.get("none").
-    // This is why we're using Familiar.get() here, despite knowing that it will
-    // crash if KoLmafia encounters an unknown familiar ID.
-    const familiarId = Number(match[1]);
+    // As of r20550, toFamiliar() returns the 'none' familiar for many IDs
+    // converted using Number() or parseInt(). To properly convert integers,
+    // we need to use toInt().
+    const familiarId = toInt(match[1]);
     const fam = Familiar.get(familiarId);
 
     // Skip unknown familiar
