@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2021-03-13
+
 ### Changed
 
 - Updated DataTables to 1.10.24 and jQuery to 3.6.0.
@@ -33,5 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release
 
-[unreleased]: https://github.com/pastelmind/100familiars/compare/v0.1.0...HEAD
+[unreleased]: https://github.com/pastelmind/100familiars/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/pastelmind/100familiars/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/pastelmind/100familiars/releases/tag/v0.1.0
