@@ -236,7 +236,7 @@ export function main(): void {
           <script src="/100familiars/100familiars.js"></script>
           <link
             rel="stylesheet"
-            href="/images/100familiars/css/jquery.Datatables.min.css"
+            href="/images/relayimages/100familiars/css/jquery.Datatables.min.css"
           />
           <link rel="stylesheet" href="/100familiars/style.css" />
         </head>
