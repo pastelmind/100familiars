@@ -61,16 +61,17 @@ const browserScriptOptions = {
     copy({
       targets: [
         {
-          // Copy DataTables CSS to /images/100familiars/, because it expects
-          // the images to be in the ../images/ relative path
+          // Copy DataTables CSS to /images/relayimages/100familiars/, because
+          // it expects the images to be in the ../images/ relative path
           src: 'node_modules/datatables.net-dt/css/jquery.Datatables.min.css',
-          dest: `${DIST_DIR}/images/100familiars/css/`,
+          dest: `${DIST_DIR}/images/relayimages/100familiars/css/`,
         },
         {
-          // Copy DataTables images to /images/100familiars/, because KoLmafia
-          // does not serve images inside /relay/
+          // Copy DataTables images to /images/relayimages/100familiars/,
+          // because KoLmafia only serves images under /images/, and
+          // /images/relayimages/ is safe from the `cache clear` gCLI command
           src: 'node_modules/datatables.net-dt/images/*',
-          dest: `${DIST_DIR}/images/100familiars/images/`,
+          dest: `${DIST_DIR}/images/relayimages/100familiars/images/`,
         },
         {
           src: [

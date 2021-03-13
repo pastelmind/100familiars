@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated DataTables to 1.10.24 and jQuery to 3.6.0.
 
+### Fixed
+
+- Moved custom images under `/images/relayimages/` to protect them from being
+  accidentally deleted by the `cache clear` gCLI command. ([#42])
+
+[#42]: https://github.com/pastelmind/100familiars/pull/42
+
 ## [0.1.0] - 2021-02-02
 
 ### Added
