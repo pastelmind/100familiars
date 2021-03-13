@@ -23,7 +23,7 @@
     "commander": "^7.1.0",
     "fs-extra": "^9.1.0",
     "gts": "^3.1.0",
-    "kolmafia": "npm:kolmafia-types@0.0.3",
+    "kolmafia": "npm:kolmafia-types@0.0.6",
     "prettier": "^2.2.1",
     "rollup": "^2.41.2",
     "rollup-plugin-copy": "^3.4.0",
