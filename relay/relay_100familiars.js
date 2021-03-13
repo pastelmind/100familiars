@@ -80,7 +80,7 @@ function createCommonjsModule(fn) {
 
 var vhtml = createCommonjsModule(function (module, exports) {
 (function (global, factory) {
-	 module.exports = factory() ;
+	module.exports = factory() ;
 }(commonjsGlobal, (function () {
 var emptyTags = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
 
@@ -147,7 +147,7 @@ function h(name, attrs) {
 return h;
 
 })));
-
+//# sourceMappingURL=vhtml.js.map
 });
 
 /**
@@ -293,7 +293,7 @@ function main() {
                 vhtml("script", { src: "/100familiars/jquery.Datatables.min.js" }),
                 vhtml("script", { src: "/100familiars/dataTables.dataTables.min.js" }),
                 vhtml("script", { src: "/100familiars/100familiars.js" }),
-                vhtml("link", { rel: "stylesheet", href: "/images/100familiars/css/jquery.Datatables.min.css" }),
+                vhtml("link", { rel: "stylesheet", href: "/images/relayimages/100familiars/css/jquery.Datatables.min.css" }),
                 vhtml("link", { rel: "stylesheet", href: "/100familiars/style.css" })),
             vhtml("body", null,
                 vhtml(FamiliarTable, null)))));
