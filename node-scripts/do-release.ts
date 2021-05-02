@@ -10,7 +10,7 @@ import simpleGit, {GitError} from 'simple-git';
  * Temporary directory used to store build artifacts and dependencies.
  * This must be .gitignore-ed!
  */
-const DIST_DIR = 'build/dist';
+const DIST_DIR = 'build';
 
 /**
  * .gitignore file to filter out everything that does not belong in the release
