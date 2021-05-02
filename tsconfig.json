@@ -1,13 +1,9 @@
-// Master config that executes all other configs
+// "Solution" tsconfig for code that runs in Node.js (scripts)
 {
   "compilerOptions": {
+    "noEmit": true,
     // Needed for `gts clean`, nothing else
     "outDir": "build"
   },
-  "files": [],
-  "references": [
-    {"path": "node-scripts"},
-    {"path": "src"},
-    {"path": "src/relay/100familiars"}
-  ]
+  "exclude": ["src"]
 }
