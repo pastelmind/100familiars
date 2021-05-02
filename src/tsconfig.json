@@ -20,7 +20,8 @@
       "ES2019.String"
     ],
     "module": "CommonJS",
-    "target": "ES5",
+    // Use Bublé to transpile us down to ES5
+    "target": "ES2018",
     "types": []
   },
   "exclude": ["relay/100familiars"]

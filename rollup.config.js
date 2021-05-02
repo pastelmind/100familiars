@@ -3,7 +3,9 @@
 import commonjs from '@rollup/plugin-commonjs';
 import {nodeResolve} from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import buble from '@rollup/plugin-buble';
 import copy from 'rollup-plugin-copy';
+import createPreset from 'buble-config-rhino';
 
 /**
  * Temporary directory used to store build artifacts and dependencies.
@@ -36,6 +38,7 @@ const kolmafiaScriptOptions = {
       // Disable sourcemaps
       sourceMap: false,
     }),
+    buble(createPreset()),
   ],
 };
 

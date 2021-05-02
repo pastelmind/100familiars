@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Use [Bublé](https://github.com/bublejs/buble) to transpile ES2015-2018
+  features for KoLmafia. ([#46])
+
+[#46]: https://github.com/pastelmind/100familiars/pull/46
+
 ## [0.1.1] - 2021-03-13
 
 ### Changed
