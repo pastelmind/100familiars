@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "datatables.net-dt": "^1.10.24",
-    "kolmafia": "npm:kolmafia-types@^0.1.0",
+    "kolmafia-types": "^0.1.1",
     "kolmafia-util": "^0.1.2",
     "vhtml": "^2.2.0"
   },
