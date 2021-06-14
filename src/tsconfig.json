@@ -2,6 +2,8 @@
 {
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    // Needed to use the "paths" field
+    "baseUrl": "..",
     // JSX config for vhtml
     "jsx": "react",
     "jsxFactory": "h",
@@ -20,6 +22,9 @@
       "ES2019.String"
     ],
     "module": "CommonJS",
+    "paths": {
+      "kolmafia": ["./node_modules/kolmafia-types"]
+    },
     // Use Bublé to transpile us down to ES5
     "target": "ES2018",
     "types": []
