@@ -73,7 +73,7 @@ const browserScriptOptions = {
           // Copy DataTables images to /images/relayimages/100familiars/,
           // because KoLmafia only serves images under /images/, and
           // /images/relayimages/ is safe from the `cache clear` gCLI command
-          src: 'node_modules/datatables.net-dt/images/*',
+          src: 'node_modules/datatables.net-dt/images/*.png',
           dest: `${DIST_DIR}/images/relayimages/100familiars/images/`,
         },
         {
