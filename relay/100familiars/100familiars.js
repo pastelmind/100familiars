@@ -33,4 +33,4 @@
         $('.familiars').DataTable();
     });
 
-}());
+})();
