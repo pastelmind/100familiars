@@ -8,14 +8,14 @@
     "node": ">=12"
   },
   "dependencies": {
-    "datatables.net-dt": "^1.10.25",
-    "kolmafia-types": "^0.1.1",
-    "kolmafia-util": "^0.1.2",
+    "datatables.net-dt": "^1.12.1",
+    "kolmafia-types": "^0.3.0",
+    "kolmafia-util": "^0.3.0",
     "vhtml": "^2.2.0"
   },
   "devDependencies": {
     "@rollup/plugin-buble": "^0.21.3",
-    "@rollup/plugin-commonjs": "^19.0.0",
+    "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.0.0",
     "@rollup/plugin-typescript": "^8.2.1",
     "@types/datatables.net": "^1.10.19",
@@ -23,13 +23,13 @@
     "@types/node": "^12.20.15",
     "@types/vhtml": "^2.2.2",
     "buble-config-rhino": "^0.1.0",
-    "commander": "^7.2.0",
+    "commander": "^9.2.0",
     "fs-extra": "^10.0.0",
     "gts": "^3.1.0",
     "prettier": "^2.3.1",
     "rollup": "^2.51.2",
     "rollup-plugin-copy": "^3.4.0",
-    "simple-git": "^2.40.0",
+    "simple-git": "^3.7.1",
     "ts-node": "^10.0.0",
     "tslib": "^2.3.0",
     "typescript": "^4.3.2"
